@@ -8,7 +8,7 @@
 		<!-- Animated Logo -->
 		<figure>
 			<section class="img-bg" />
-			<img src="/favicon.svg" alt="AnoAsked Logo" class="w-64"/>
+			<img src="/favicon.svg" alt="AnoAsked Logo" class="w-64 h-64 md:w-80 md:h-80"/>
 		</figure>
 		<!-- / -->
 		<div class="flex flex-col justify-center space-y-2">
