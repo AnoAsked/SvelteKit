@@ -29,6 +29,7 @@
 		<!-- App Bar -->
 		<AppBar>
 			<svelte:fragment slot="lead">
+				<img src="/favicon.svg" alt="AnoAsked Logo" class="w-6 h-6 mr-2"/>
 				<strong class="text-xl">AnoAsked</strong>
 			</svelte:fragment>
 			<svelte:fragment slot="trail">

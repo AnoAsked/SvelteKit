@@ -4,7 +4,7 @@
 
 <div class="container h-full mx-auto flex justify-center items-center">
 	<div class="space-y-10 text-center flex flex-col items-center">
-		<h2 class="h2">Wilkommen bei AnoAsked.</h2>
+		<h2 class="h2">Willkommen bei AnoAsked</h2>
 		<!-- Animated Logo -->
 		<figure>
 			<section class="img-bg" />
@@ -13,12 +13,12 @@
 		<!-- / -->
 		<div class="flex flex-col justify-center space-y-2">
 			<button type="button" class="btn variant-ghost-success">
-				<Icon icon="mdi:github" class="w-6 h-6" />
-				<span>Mit Github Fortfahren</span>
+				<Icon icon="mdi:google" class="w-6 h-6" />
+				<span>Mit Google fortfahren</span>
 			</button>
 			<button type="button" class="btn variant-ghost-error">
 				<Icon icon="mdi:anonymous" class="w-6 h-6" />
-				<span>Anonym Fortfahren</span>
+				<span>Anonym fortfahren</span>
 			</button>
 		</div>
 	</div>
