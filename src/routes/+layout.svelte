@@ -35,13 +35,8 @@
 				</a>
 			</svelte:fragment>
 			<svelte:fragment slot="trail">
-				<LightSwitch />
-				<a
-					class="btn btn-sm variant-ghost-surface"
-					href="https://github.com/AnoAsked"
-					target="_blank"
-					rel="noreferrer"
-				>
+				<LightSwitch title="Wechsel heller und dunkler modus."/>
+				<a class="btn btn-sm variant-ghost-surface" href="https://github.com/AnoAsked" target="_blank" rel="noreferrer">
 					GitHub
 				</a>
 			</svelte:fragment>
