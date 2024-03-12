@@ -8,14 +8,12 @@ body {
 	@apply h-full overflow-hidden;
 }
 
-/* modern theme */
-@font-face {
-	font-family: 'Quicksand';
-	src: url('/fonts/Quicksand.ttf');
-	font-display: swap;
+:root [data-theme='crimson'] {
+	--theme-rounded-base: 5px;
+	--theme-rounded-container: 5px;
 }
 
-/* pixeled theme */
+/* pixeled font */
 @font-face {
 	font-family: 'Pixeled';
 	src: url('/fonts/PixelifySans.ttf');
