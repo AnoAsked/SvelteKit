@@ -1,7 +1,10 @@
 <script lang="ts">
 	import '../app.postcss';
-	import { AppShell, AppBar, LightSwitch } from '@skeletonlabs/skeleton';
 
+	// Skeleton
+	import { AppShell, AppBar, LightSwitch, Toast, initializeStores } from '@skeletonlabs/skeleton';
+	initializeStores();
+	
 	// Highlight JS
 	import hljs from 'highlight.js/lib/core';
 	import 'highlight.js/styles/github-dark.css';
@@ -20,27 +23,16 @@
 	// Floating UI for Popups
 	import { computePosition, autoUpdate, flip, shift, offset, arrow } from '@floating-ui/dom';
 	import { storePopup } from '@skeletonlabs/skeleton';
+	import Header from '$lib/header.svelte';
 	storePopup.set({ computePosition, autoUpdate, flip, shift, offset, arrow });
 </script>
+
+<Toast />
 
 <!-- App Shell -->
 <AppShell>
 	<svelte:fragment slot="header">
-		<!-- App Bar -->
-		<AppBar>
-			<svelte:fragment slot="lead" >
-				<a class="flex space-x-2" href="/">
-					<img src="/favicon.svg" alt="AnoAsked Logo" class="w-6 h-6" />
-					<strong class="text-xl pixeled">AnoAsked</strong>
-				</a>
-			</svelte:fragment>
-			<svelte:fragment slot="trail">
-				<LightSwitch title="Wechsel heller und dunkler modus."/>
-				<a class="btn btn-sm variant-ghost-surface" href="https://github.com/AnoAsked" target="_blank" rel="noreferrer">
-					GitHub
-				</a>
-			</svelte:fragment>
-		</AppBar>
+		<Header />
 	</svelte:fragment>
 	<!-- Page Route Content -->
 	<slot />

@@ -12,11 +12,11 @@
 		</figure>
 		<!-- / -->
 		<div class="flex flex-col justify-center space-y-2">
-			<a type="button" class="btn btn-md variant-ghost-success" href="/login">
+			<a type="button" class="btn btn-md variant-ghost-success" href="/auth/login">
 				<Icon icon="mdi:verified" class="w-6 h-6" />
 				<span>Verifiziert fortfahren</span>
 			</a>
-			<a type="button" class="btn btn-md variant-ghost-error" href="/home">
+			<a type="button" class="btn btn-md variant-ghost-error" href="/app">
 				<Icon icon="mdi:anonymous" class="w-6 h-6" />
 				<span>Anonym fortfahren</span>
 			</a>
