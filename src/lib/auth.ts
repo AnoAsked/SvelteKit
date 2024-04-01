@@ -4,7 +4,7 @@ import Gun from "gun"
 import "gun/sea"
 import "gun/axe"
 
-export const db = new Gun();
+export const db = new Gun(['http://localhost:8765/gun', 'https://anoasked-git-dev-simon-masooglus-projects.vercel.app/gun', 'https://anoasked.vercel.app/gun']);
 export const user = db.user().recall({sessionStorage: true}); 
 
 export const username = writable('');
