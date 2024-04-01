@@ -114,5 +114,8 @@
 		"transition",
 		"width",
 		"zIndex"
-	]
+	],
+	"search.exclude": {
+		"**/node_modules": false
+	}
 }
