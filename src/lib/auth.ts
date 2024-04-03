@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { writable } from 'svelte/store';
 import { browser } from '$app/environment';
-import "gun/lib/mobile"
 import Gun from "gun/gun"
 import "gun/sea"
 
