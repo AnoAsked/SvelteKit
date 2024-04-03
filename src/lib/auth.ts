@@ -1,17 +1,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { writable } from 'svelte/store';
-import Gun from "gun"
-import "gun/sea"
-import "gun/axe"
+import { browser } from '$app/environment';
+import Gun from 'gun';
+import 'gun/sea';
 
-export const db = new Gun(['http://localhost:8765/gun', 'https://anoasked-git-dev-simon-masooglus-projects.vercel.app/gun', 'https://anoasked.vercel.app/gun']);
-export const user = db.user().recall({sessionStorage: true}); 
+export const db = browser ? new Gun({ peers: [`http://${window.location.host}/gun`] }) : undefined;
+export const user = browser ? db?.user().recall({sessionStorage: true}) : undefined; 
 
 export const username = writable('');
 
-user.get('alias').on((v:string) => username.set(v))
+user?.get('alias').on((v:string) => username.set(v))
 
-db.on('auth', async() => {
+db?.on('auth', async() => {
     const alias = await user.get('alias');
     username.set(alias)
 })
