@@ -1,0 +1,3 @@
+{
+    "installcommand":"npm install text-encoding buffer && npm install --production"
+}

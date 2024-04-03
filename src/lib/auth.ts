@@ -1,12 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { writable } from 'svelte/store';
 import { browser } from '$app/environment';
-import Buffer from "buffer";
-import pkg from "text-encoding";
-const { TextEncoder, TextDecoder } = pkg;
-global.Buffer = global.Buffer || Buffer.Buffer;
-global.TextEncoder = TextEncoder;
-global.TextDecoder = TextDecoder;
+import "gun/lib/mobile"
 import Gun from "gun/gun"
 import "gun/sea"
 
