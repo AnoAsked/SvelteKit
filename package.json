@@ -50,6 +50,8 @@
 		"@peculiar/webcrypto": "^1.4.6",
 		"buffer": "^6.0.3",
 		"gun": "^0.2020.1239",
+		"gun-rebuild": "github:bmatusiak/gun-rebuild",
+		"gun-rebuild-sea": "github:bmatusiak/gun-rebuild-sea",
 		"highlight.js": "11.9.0",
 		"text-encoding": "^0.7.0"
 	}
