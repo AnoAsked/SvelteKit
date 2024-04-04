@@ -1,24 +1,26 @@
 const fs = require('fs');
 
-const filePath = 'node_modules/gun/sea.js'; // Replace with your actual file path
+const filePath = 'node_modules/gun/sea.js'; // Sea module to edit
 
-const searchString1 = 'api.TextDecoder = TextDecoder;'; // String to be replaced
-const replaceString1 = 'api.TextDecoder = global.TextDecoder;'; // Replacement string
-const searchString2 = 'api.TextEncoder = TextEncoder;'; // String to be replaced
-const replaceString2 = 'api.TextEncoder = global.TextEncoder;'; // Replacement string
-const searchString3 = 'const { TextEncoder, TextDecoder }'; // String to be replaced
-const replaceString3 = '//const { TextEncoder, TextDecoder }'; // Replacement string
+const oldTextDecoder = 'api.TextDecoder = TextDecoder;';
+const newTextDecoder = 'api.TextDecoder = global.TextDecoder;';
+const oldTextEncoder = 'api.TextEncoder = TextEncoder;';
+const newTextEncoder = 'api.TextEncoder = global.TextEncoder;';
+const oldRequire = 'const { TextEncoder, TextDecoder }';
+const newRequire = '//const { TextEncoder, TextDecoder }';
 
 fs.readFile(filePath, 'utf8', (err, data) => {
   if (err) {
     console.error(err);
   } else {
-    const modifiedContent = data.replace(searchString1, replaceString1).replace(searchString2, replaceString2).replace(searchString3, replaceString3);
+    const modifiedContent = data.replace(oldTextDecoder, newTextDecoder)
+                                .replace(oldTextEncoder, newTextEncoder)
+                                .replace(oldRequire, newRequire);
     fs.writeFile(filePath, modifiedContent, 'utf8', (err) => {
       if (err) {
         console.error(err);
       } else {
-        console.log('String replaced successfully!');
+        console.log('Replaced the text-encoder definition and imports with global instances.');
       }
     });
   }
