@@ -46,7 +46,7 @@
         <form use:focusTrap={true} class="space-y-6" on:submit|preventDefault={onRegister}>
             <div class="flex flex-col justify-center space-y-2 w-80">
                 <div class="input-group input-group-divider grid-cols-[1fr_auto]">
-                    <input type="text" minlength="3" maxlength="16" placeholder="Benutzername definieren..." bind:value={username} disabled={loading}/>
+                    <input type="text" placeholder="Benutzername definieren..." bind:value={username} disabled={loading}/>
                     <div><Icon icon="mdi:user" class="w-6 h-6" /></div>
                 </div>
                 <div class="input-group input-group-divider grid-cols-[1fr_auto]">

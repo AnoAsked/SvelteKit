@@ -2,7 +2,7 @@
 	import '../app.postcss';
 
 	// Skeleton
-	import { AppShell, AppBar, LightSwitch, Toast, initializeStores } from '@skeletonlabs/skeleton';
+	import { AppShell, AppBar, LightSwitch, Toast, initializeStores, Drawer } from '@skeletonlabs/skeleton';
 	initializeStores();
 	
 	// Highlight JS
@@ -28,6 +28,7 @@
 </script>
 
 <Toast />
+<Drawer />
 
 <!-- App Shell -->
 <AppShell>
