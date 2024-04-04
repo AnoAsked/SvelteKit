@@ -6,7 +6,6 @@
 
     onMount(() => {
         if ($username && browser) goto("/app")
-        console.log(user.is)
     })
 
     $: if ($username && browser) goto("/app")

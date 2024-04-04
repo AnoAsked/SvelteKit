@@ -3,17 +3,13 @@
     import { username, logout } from "$lib/auth";
     import { getToastStore } from '@skeletonlabs/skeleton';
 	import Icon from "@iconify/svelte";
-	import { goto } from "$app/navigation";
     import { errorToast, successToast } from '$lib/toast';
     
     const toastStore = getToastStore();
 
     function onLogout(){
+        toastStore.trigger(successToast("Logging out of AnoAsked."))
         logout()
-        .then(() => {
-            toastStore.trigger(successToast("Logged out of AnoAsked."))
-            goto("/")
-        })
         .catch(err => toastStore.trigger(errorToast(err)))
     }
 </script>
