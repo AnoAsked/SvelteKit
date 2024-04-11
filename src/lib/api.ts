@@ -1,8 +1,7 @@
 import axios from "axios";
-import { PUBLIC_VERIFICATION_ENDPOINT } from '$env/static/public'
 
 const api = axios.create({
-  baseURL : PUBLIC_VERIFICATION_ENDPOINT,
+  baseURL : "https://verificationserver-opvs.onrender.com/verification",
   headers: {
     'Access-Control-Allow-Origin': '*',
     'Content-Type': 'application/json',
