@@ -78,7 +78,7 @@
 	}
 </script>
 
-<div class="flex space-x-1">
+<div class="flex flex-wrap space-x-1 space-y-1">
 	{#if status == Status.PENDING}
 	<div class="w-48 input-group input-group-divider grid-cols-[1fr_auto]">
 		<input type="text" placeholder="Enter code..." bind:value={code} disabled={loading}/>
