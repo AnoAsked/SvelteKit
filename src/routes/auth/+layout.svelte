@@ -7,8 +7,6 @@
     onMount(() => {
         if ($username && browser) goto("/app")
     })
-
-    $: if ($username && browser) goto("/app")
 </script>
 
 {#if (!$username && browser && !user.is)}

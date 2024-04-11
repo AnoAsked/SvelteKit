@@ -1,10 +1,10 @@
-<script>
+<script lang="ts">
 	import Icon from '@iconify/svelte';
 </script>
 
 <div class="container h-full mx-auto flex justify-center items-center">
 	<div class="space-y-10 text-center flex flex-col items-center">
-		<h2 class="h2">Willkommen bei <span class="h1 pixeled text-primary-500">AnoAsked</span></h2>
+		<h2 class="h2">Welcome to <span class="h1 pixeled text-primary-500">AnoAsked</span></h2>
 		<!-- Animated Logo -->
 		<figure class="flex relative flex-col">
 			<section class="img-bg img-animation" />
@@ -12,13 +12,13 @@
 		</figure>
 		<!-- / -->
 		<div class="flex flex-col justify-center space-y-2">
-			<a type="button" class="btn btn-md variant-ghost-success" href="/auth/login">
+			<a type="button" class="btn btn-md variant-soft-success" href="/auth/login">
 				<Icon icon="mdi:verified" class="w-6 h-6" />
-				<span>Verifiziert fortfahren</span>
+				<span>Continue verified</span>
 			</a>
-			<a type="button" class="btn btn-md variant-ghost-error" href="/app">
+			<a type="button" class="btn btn-md variant-soft-error" href="/app">
 				<Icon icon="mdi:anonymous" class="w-6 h-6" />
-				<span>Anonym fortfahren</span>
+				<span>Continue anonymous</span>
 			</a>
 		</div>
 	</div>

@@ -17,7 +17,7 @@
         login(username, password)
         .then(() => {
             toastStore.trigger(successToast("Logged into AnoAsked."))
-            goto("/app")
+            goto("/app", {replaceState: true})
         })
         .catch(err => toastStore.trigger(errorToast(err)))
         .finally(() => loading = false)
@@ -26,15 +26,15 @@
 
 <div class="container h-full mx-auto flex justify-center items-center">
 	<div class="space-y-10 text-center flex flex-col items-center">
-		<h2 class="h2">Bei <span class="h1 pixeled text-primary-500">AnoAsked</span> anmelden</h2>
+		<h2 class="h2">Login to <span class="h1 pixeled text-primary-500">AnoAsked</span></h2>
 		<form use:focusTrap={true} class="space-y-6" on:submit|preventDefault={onLogin}>
             <div class="flex flex-col justify-center space-y-2 w-80">
                 <div class="input-group input-group-divider grid-cols-[1fr_auto]">
-                    <input type="text" placeholder="Benutzername eingeben..." bind:value={username} disabled={loading}/>
+                    <input type="text" placeholder="Enter username..." bind:value={username} disabled={loading}/>
                     <div><Icon icon="mdi:user" class="w-6 h-6" /></div>
                 </div>
                 <div class="input-group input-group-divider grid-cols-[1fr_auto]">
-                    <input type="password" placeholder="Passwort eingeben..." bind:value={password} disabled={loading}/>
+                    <input type="password" placeholder="Enter password..." bind:value={password} disabled={loading}/>
                     <div><Icon icon="mdi:password" class="w-6 h-6" /></div>
                 </div>
             </div>
@@ -44,17 +44,17 @@
                 {:else}
                     <Icon icon="mdi:login" class="w-6 h-6" />
                 {/if}
-                <span>Anmelden</span>
+                <span>Login</span>
             </button>
         </form>
         <div class="flex justify-center items-center space-x-2">
             <a class="btn btn-md variant-ghost-surface w-min" href="/auth">
                 <Icon icon="mdi:arrow-back" class="w-6 h-6" />
-                <span>Zurück</span>
+                <span>Back</span>
             </a>
             <a type="button" class="btn btn-md variant-ghost" href="/auth/register">
                 <Icon icon="mdi:register" class="w-6 h-6" />
-                <span>Registrieren</span>
+                <span>Register</span>
             </a>
         </div>
 	</div>

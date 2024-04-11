@@ -2,7 +2,7 @@
 	import '../app.postcss';
 
 	// Skeleton
-	import { AppShell, AppBar, LightSwitch, Toast, initializeStores, Drawer } from '@skeletonlabs/skeleton';
+	import { AppShell, Toast, initializeStores, Modal, type ModalComponent } from '@skeletonlabs/skeleton';
 	initializeStores();
 	
 	// Highlight JS
@@ -23,12 +23,19 @@
 	// Floating UI for Popups
 	import { computePosition, autoUpdate, flip, shift, offset, arrow } from '@floating-ui/dom';
 	import { storePopup } from '@skeletonlabs/skeleton';
-	import Header from '$lib/header.svelte';
+	import Header from '$lib/components/header.svelte';
 	storePopup.set({ computePosition, autoUpdate, flip, shift, offset, arrow });
+
+	// Modals
+	import SettingsModal from '$lib/components/settings.svelte';
+
+	const modalRegistry: Record<string, ModalComponent> = {
+		settingsModal: { ref: SettingsModal },
+	};
 </script>
 
 <Toast />
-<Drawer />
+<Modal components={modalRegistry} />
 
 <!-- App Shell -->
 <AppShell>

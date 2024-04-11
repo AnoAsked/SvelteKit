@@ -5,7 +5,9 @@
 	import Icon from "@iconify/svelte";
 	import { goto } from "$app/navigation";
     import { errorToast, successToast } from '$lib/toast';
-    
+    import { getModalStore, type ModalSettings } from '@skeletonlabs/skeleton';
+
+    const modalStore = getModalStore();
     const toastStore = getToastStore();
 
     function onLogout(){
@@ -15,6 +17,20 @@
             goto("/")
         })
         .catch(err => toastStore.trigger(errorToast(err)))
+    }
+
+    function onSettings(){
+        const modal: ModalSettings = {
+            title: 'User settings',
+            body: 'This data is saved encrypted.',
+            type: 'component',
+            component: 'settingsModal',
+        };
+        modalStore.trigger(modal);
+    }
+
+    function onDeleteLocal(){
+        alert("not implemented")
     }
 
     const userPopup: PopupSettings = {
@@ -27,7 +43,7 @@
 <!-- App Bar -->
 <AppBar>
     <svelte:fragment slot="lead" >
-        <a class="flex space-x-2" href="/">
+        <a class="flex space-x-2 hover:text-primary-500" href="/">
             <img src="/favicon.svg" alt="AnoAsked Logo" class="w-6 h-6" />
             <strong class="text-xl pixeled">AnoAsked</strong>
         </a>
@@ -48,11 +64,11 @@
             <div class="card p-4 space-y-2 w-48 shadow-xl" data-popup="userPopup">
                 <h6 class="h6 text-center text-ellipsis overflow-hidden">{$username}</h6>
                 <div class="space-y-1">
-                    <button type="button" class="btn btn-sm variant-soft w-full">
+                    <button type="button" class="btn btn-sm variant-soft w-full" on:click={onSettings}>
                         <span><Icon icon="mdi:settings" class="w-6 h-6" /></span>
                         <span>Settings</span>
                     </button>
-                    <button type="button" class="btn btn-sm variant-soft w-full">
+                    <button type="button" class="btn btn-sm variant-soft w-full" on:click={onLogout}>
                         <span><Icon icon="mdi:trash" class="w-6 h-6" /></span>
                         <span>Delete local data</span>
                     </button>
