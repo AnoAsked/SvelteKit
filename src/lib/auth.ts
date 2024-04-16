@@ -50,7 +50,7 @@ export function register(username:string, password:string, email:string):Promise
     })
 }
 
-export function registerHelper(username:string, password:string):Promise<void> {
+function registerHelper(username:string, password:string):Promise<void> {
     return new Promise((resolve, reject) => {
         user.create(username, password, (ack:any) => {
             if (ack.err) reject(ack.err)

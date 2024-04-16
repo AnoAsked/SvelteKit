@@ -1,14 +1,17 @@
 <script lang="ts">
 	import { AppBar, Avatar, LightSwitch, popup, type PopupSettings } from "@skeletonlabs/skeleton";
-    import { username, logout } from "$lib/auth";
+    import { username, logout, db } from "$lib/auth";
     import { getToastStore } from '@skeletonlabs/skeleton';
 	import Icon from "@iconify/svelte";
 	import { goto } from "$app/navigation";
     import { errorToast, successToast } from '$lib/toast';
     import { getModalStore, type ModalSettings } from '@skeletonlabs/skeleton';
+	import { onMount } from "svelte";
 
     const modalStore = getModalStore();
     const toastStore = getToastStore();
+
+    let connectedPeerCount = 0;
 
     function onLogout(){
         toastStore.trigger(successToast("Logging out of AnoAsked."))
@@ -38,6 +41,18 @@
         target: 'userPopup',
         placement: 'bottom-end',
     };
+
+    onMount(() => {
+        const opt_peers = db.back('opt.peers'); // get peers, as configured in the setup
+        connectedPeerCount = 0
+        let peer: any;
+        for (peer of Object.values(opt_peers)) {
+            if (peer && peer.wire && peer.wire.readyState === 1 && peer.wire.OPEN === 1 && peer.wire.constructor.name === 'WebSocket') {
+                connectedPeerCount++;
+            }
+        }
+        console.log(Object.values(opt_peers))
+    })
 </script>
 
 <!-- App Bar -->
@@ -49,18 +64,18 @@
         </a>
     </svelte:fragment>
     <svelte:fragment slot="trail">
-        <LightSwitch title="Wechsel heller und dunkler modus."/>
         <a class="btn btn-sm variant-ghost-surface" href="https://github.com/AnoAsked" target="_blank" rel="noreferrer">
             GitHub
         </a>
+        <p>{connectedPeerCount}</p>
         {#if $username}
-            <div use:popup={userPopup}>
+            <button use:popup={userPopup}>
                 {#if $username}
                     <Avatar src="https://api.dicebear.com/8.x/pixel-art/svg?seed={$username}" width="w-8" rounded="rounded-full" cursor="cursor-pointer"/>
                 {:else}
                     <div class="placeholder-circle w-8 animate-pulse" />
                 {/if}
-            </div>
+            </button>
             <div class="card p-4 space-y-2 w-48 shadow-xl" data-popup="userPopup">
                 <h6 class="h6 text-center text-ellipsis overflow-hidden">{$username}</h6>
                 <div class="space-y-1">
@@ -68,7 +83,11 @@
                         <span><Icon icon="mdi:settings" class="w-6 h-6" /></span>
                         <span>Settings</span>
                     </button>
-                    <button type="button" class="btn btn-sm variant-soft w-full" on:click={onLogout}>
+                    <div class="btn btn-sm variant-soft w-full active:">
+                        <span><LightSwitch title="Switch dark and light mode."/></span>
+                        <span>Change</span>
+                    </div>
+                    <button type="button" class="btn btn-sm variant-soft w-full">
                         <span><Icon icon="mdi:trash" class="w-6 h-6" /></span>
                         <span>Delete local data</span>
                     </button>
