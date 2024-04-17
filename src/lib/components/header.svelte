@@ -42,7 +42,7 @@
         placement: 'bottom-end',
     };
 
-    onMount(() => {
+    function checkPeerCount() {
         const opt_peers = db.back('opt.peers'); // get peers, as configured in the setup
         connectedPeerCount = 0
         let peer: any;
@@ -51,8 +51,7 @@
                 connectedPeerCount++;
             }
         }
-        console.log(Object.values(opt_peers))
-    })
+    }
 </script>
 
 <!-- App Bar -->
@@ -67,7 +66,10 @@
         <a class="btn btn-sm variant-ghost-surface" href="https://github.com/AnoAsked" target="_blank" rel="noreferrer">
             GitHub
         </a>
-        <p>{connectedPeerCount}</p>
+        <button type="button" class="btn btn-sm variant-soft-error w-full" on:click={checkPeerCount}>
+            <span><Icon icon="mdi:check" class="w-6 h-6" /></span>
+            <span>Count: {connectedPeerCount}</span>
+        </button>
         {#if $username}
             <button use:popup={userPopup}>
                 {#if $username}
