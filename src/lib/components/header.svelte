@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { AppBar, Avatar, LightSwitch, popup, type PopupSettings } from "@skeletonlabs/skeleton";
+	import { AppBar, Avatar, getDrawerStore, LightSwitch, popup, type PopupSettings } from "@skeletonlabs/skeleton";
     import { username, logout, db } from "$lib/auth";
     import { getToastStore } from '@skeletonlabs/skeleton';
 	import Icon from "@iconify/svelte";
@@ -7,6 +7,7 @@
     import { errorToast, successToast } from '$lib/toast';
     import { getModalStore, type ModalSettings } from '@skeletonlabs/skeleton';
 	import { onMount } from "svelte";
+	import type { MouseEventHandler } from "svelte/elements";
 
     const modalStore = getModalStore();
     const toastStore = getToastStore();
@@ -52,22 +53,33 @@
             }
         }
     }
+
+    const drawerStore = getDrawerStore();
+    function drawerOpen(): void {
+        drawerStore.open({
+            width: 'w-80',
+            padding: 'p-2',
+	        rounded: 'rounded-xl',
+        });
+    }
 </script>
 
 <!-- App Bar -->
 <AppBar>
-    <svelte:fragment slot="lead" >
-        <a class="flex space-x-2 hover:text-primary-500" href="/">
-            <img src="/favicon.svg" alt="AnoAsked Logo" class="w-6 h-6" />
-            <strong class="text-xl pixeled">AnoAsked</strong>
-        </a>
+    <svelte:fragment slot="lead">
+        <div class="flex items-center">
+            <button class="md:hidden btn btn-sm mr-4" on:click={drawerOpen}>
+                <span><Icon icon="mdi:forwardburger" class="w-6 h-6" /></span>
+            </button>
+            <a class="flex space-x-2 hover:text-primary-500" href="/">
+                <img src="/favicon.svg" alt="AnoAsked Logo" class="w-6 h-6" />
+                <strong class="text-xl pixeled">AnoAsked</strong>
+            </a>
+        </div>
     </svelte:fragment>
     <svelte:fragment slot="trail">
-        <a class="btn btn-sm variant-ghost-surface" href="https://github.com/AnoAsked" target="_blank" rel="noreferrer">
-            GitHub
-        </a>
         <button type="button" class="btn btn-sm variant-soft-error w-full" on:click={checkPeerCount}>
-            <span><Icon icon="mdi:check" class="w-6 h-6" /></span>
+            <span><Icon icon="mdi:beer" class="w-6 h-6" /></span>
             <span>Count: {connectedPeerCount}</span>
         </button>
         {#if $username}
@@ -89,6 +101,10 @@
                         <span><LightSwitch title="Switch dark and light mode."/></span>
                         <span>Change</span>
                     </div>
+                    <a type="button" class="btn btn-sm variant-soft w-full" href="https://github.com/AnoAsked" target="_blank" rel="noreferrer">
+                        <span><Icon icon="mdi:github" class="w-6 h-6" /></span>
+                        <span>Visit me on github</span>
+                    </a>
                     <button type="button" class="btn btn-sm variant-soft w-full">
                         <span><Icon icon="mdi:trash" class="w-6 h-6" /></span>
                         <span>Delete local data</span>
