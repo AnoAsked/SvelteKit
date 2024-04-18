@@ -9,8 +9,8 @@
 		drawerStore.close();
 	}
 
-	let favourites = ['favourites 1', 'favourites 2', 'favourites 3'];
-	let trending = ['trending 1', 'trending 2', 'trending 3'];
+	let favourites = [{name: 'favourites 1', favored: true}, {name: 'favourites 2', favored: true}, {name: 'favourites 3', favored: true}, {name: 'trending 1', favored: true}];
+	let trending = [{name: 'trending 1', favored: true}, {name: 'trending 2', favored: false}, {name: 'trending 3', favored: false}];
 </script>
 
 <TreeView>
@@ -22,9 +22,9 @@
 		<svelte:fragment slot="lead"><Icon icon="mdi:star-check" class="w-6 h-6" /></svelte:fragment>
 		Favourite rooms
 		<svelte:fragment slot="children">
-			{#each favourites as name}
+			{#each favourites as item}
 				<TreeViewItem on:click={drawerClose}>
-					<TreeViewRoom name={name} favored={true}/>
+					<TreeViewRoom name={item.name} favored={item.favored}/>
 				</TreeViewItem>
 			{/each}
 		</svelte:fragment>
@@ -33,9 +33,9 @@
 		<svelte:fragment slot="lead"><Icon icon="mdi:trending-up" class="w-6 h-6" /></svelte:fragment>
 		Trending rooms
 		<svelte:fragment slot="children">
-			{#each trending as name}
+			{#each trending as item}
 				<TreeViewItem on:click={drawerClose}>
-					<TreeViewRoom name={name} favored={true}/>
+					<TreeViewRoom name={item.name} favored={item.favored}/>
 				</TreeViewItem>
 			{/each}
 		</svelte:fragment>

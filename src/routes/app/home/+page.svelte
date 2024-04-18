@@ -1,5 +1,8 @@
 <script lang="ts">
 	import { page } from "$app/stores";
+	import { username } from "$lib/auth";
+	import Prompt from "$lib/components/prompt.svelte";
+	import Bubble from "$lib/components/bubble.svelte";
 	import Icon from "@iconify/svelte";
     import { getModalStore, type ModalSettings } from '@skeletonlabs/skeleton';
 
@@ -12,6 +15,18 @@
         };
         modalStore.trigger(modal);
     }
+
+    let bubbles = [{user: 'aaaa', message: "Welcome to AnoAsked!", timestamp: Date.now()}, {user: 'bbbb', message: "Hello there!", timestamp: Date.now()}];
 </script>
 
-<div class="flex justify-center items-center h-full w-full"><h1 class="h1">HOME</h1></div>
+<div class="h-full flex justify-center">
+    <div class="flex flex-col w-full lg:w-1/2 xl:w-1/3">
+        <div class="grow flex flex-col space-y-2">
+            {#each bubbles as bubble}
+                <Bubble bubble={bubble}/>
+            {/each}
+        </div>
+        <Prompt />
+    </div>
+</div>
+
