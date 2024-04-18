@@ -7,7 +7,7 @@ const {TextDecoder, TextEncoder} = pkg;
 global.Buffer = global.Buffer || Buffer.Buffer;
 global.TextEncoder = TextEncoder;
 global.TextDecoder = TextDecoder;
-import Gun from "gun/gun"
+import Gun from "gun"
 import "gun/axe"
 import "gun/sea"
 
