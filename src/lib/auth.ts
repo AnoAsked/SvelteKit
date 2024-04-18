@@ -8,6 +8,7 @@ global.Buffer = global.Buffer || Buffer.Buffer;
 global.TextEncoder = TextEncoder;
 global.TextDecoder = TextDecoder;
 import Gun from "gun/gun"
+import "gun/axe"
 import "gun/sea"
 
 export const db = browser ? new Gun({ peers: [`https://${window.location.host}/gun`], wrtc: { secure: true } }) : global.db;
