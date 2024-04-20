@@ -7,11 +7,11 @@ const {TextDecoder, TextEncoder} = pkg;
 global.Buffer = global.Buffer || Buffer.Buffer;
 global.TextEncoder = TextEncoder;
 global.TextDecoder = TextDecoder;
-import Gun from "gun"
+import GUN from "gun"
 import "gun/axe"
 import "gun/sea"
 
-export const db = browser ? new Gun({ peers: [`https://${window.location.host}/gun`], wrtc: { secure: true } }) : global.db;
+export const db = browser ? new GUN({ peers: [`https://${window.location.host}/gun`], wrtc: { secure: true } }) : global.db;
 export const user = browser ? db?.user().recall({sessionStorage: true}) : global.user;
 
 export const username = writable('');

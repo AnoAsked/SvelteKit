@@ -27,7 +27,7 @@
 
 	// Modals
 	import SettingsModal from '$lib/components/settings.svelte';
-	import RoomTree from '$lib/components/roomTree.svelte';
+	import RoomBar from '$lib/components/roomBar.svelte';
 
 	const modalRegistry: Record<string, ModalComponent> = {
 		settingsModal: { ref: SettingsModal },
@@ -36,9 +36,6 @@
 
 <Toast />
 <Modal components={modalRegistry} />
-<Drawer>
-	<RoomTree/>
-</Drawer>
 
 <!-- App Shell -->
 <AppShell>
