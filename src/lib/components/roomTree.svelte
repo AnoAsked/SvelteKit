@@ -22,7 +22,7 @@
 <TreeView>
 	<TreeViewItem on:click={() => selectRoom("/app/home")}>
 		<svelte:fragment slot="lead"><Icon icon="mdi:globe" class="w-6 h-6" /></svelte:fragment>
-		Home
+		<a href="/app/home">Home</a>
 	</TreeViewItem>
 	<TreeViewItem>
 		<svelte:fragment slot="lead"><Icon icon="mdi:star-check" class="w-6 h-6" /></svelte:fragment>

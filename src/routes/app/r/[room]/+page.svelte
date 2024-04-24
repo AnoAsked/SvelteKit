@@ -4,12 +4,12 @@
 	import RoomHeader from "$lib/components/roomHeader.svelte";
 	import RoomView from "$lib/components/roomView.svelte";
 	import Prompt from "$lib/components/prompt.svelte";
+	import BubblePlaceholder from "$lib/components/bubblePlaceholder.svelte";
 	import { db, user } from "$lib/auth";
-	import { onMount } from "svelte";
     import GUN from "gun";
 	import type { PageData } from "./$types";
 
-    let currentRoom:Room = {name: "fasdfa", favored: false};
+    let currentRoom:Room;
     let currentBubbles:Bubble[] = [];
 
     export let data:PageData
