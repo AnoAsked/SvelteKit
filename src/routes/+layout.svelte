@@ -27,7 +27,6 @@
 
 	// Modals
 	import SettingsModal from '$lib/components/settings.svelte';
-	import RoomBar from '$lib/components/roomBar.svelte';
 
 	const modalRegistry: Record<string, ModalComponent> = {
 		settingsModal: { ref: SettingsModal },

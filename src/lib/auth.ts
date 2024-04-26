@@ -11,7 +11,7 @@ import GUN from "gun"
 import "gun/axe"
 import "gun/sea"
 
-export const db = browser ? new GUN({ peers: [`https://${window.location.host}/gun`], wrtc: { secure: true } }) : global.db;
+export const db = browser ? new GUN({ peers: ["https://gun-manhattan.herokuapp.com/gun", "https://peer.wallie.io/gun", "https://gundb-relay-mlccl.ondigitalocean.app/gun"] }) : global.db;
 export const user = browser ? db?.user().recall({sessionStorage: true}) : global.user;
 
 export const username = writable('');
