@@ -16,15 +16,9 @@
         };
         modalStore.trigger(modal);
     }
-
-    onMount(() => {
-        if (!$username && browser) goto("/auth")
-    })
-
-    $: if (!$username && browser) goto("/auth")
 </script>
 
-{#if ($username && browser && user.is)}
+{#if ($username && browser)}
     <Drawer>
         <RoomBar/>
     </Drawer>

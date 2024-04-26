@@ -31,6 +31,33 @@
 	const modalRegistry: Record<string, ModalComponent> = {
 		settingsModal: { ref: SettingsModal },
 	};
+
+	// Routing
+	import { onMount } from 'svelte';
+	import { browser } from '$app/environment';
+	import { username } from '$lib/auth';
+	import { goto } from '$app/navigation';
+	import { page } from '$app/stores';
+
+	onMount(() => {
+		if (!$username && browser) {
+			if (!$page.url.pathname.startsWith("/auth"))
+				goto("/auth")
+		} else if ($username && browser){
+			if ($page.url.pathname === "/app")
+				goto("/app/home")
+		}
+    })
+
+	$: {
+		if (!$username && browser) {
+			if (!$page.url.pathname.startsWith("/auth"))
+				goto("/auth")
+		} else if ($username && browser){
+			if ($page.url.pathname === "/app")
+				goto("/app/home")
+		}
+	}
 </script>
 
 <Toast />
