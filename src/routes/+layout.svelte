@@ -44,7 +44,7 @@
 			if (!$page.url.pathname.startsWith("/auth"))
 				goto("/auth")
 		} else if ($username && browser){
-			if ($page.url.pathname === "/app")
+			if (!$page.url.pathname.startsWith("/app") || $page.url.pathname == "/app")
 				goto("/app/home")
 		}
     })
