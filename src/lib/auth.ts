@@ -16,15 +16,20 @@ export const user = browser ? db?.user().recall({sessionStorage: true}) : global
 
 export const username = writable('');
 export const email = writable('');
+let favoredinit: string[] = [];
+export const favored = writable(favoredinit);
 
 user?.get('alias').on((v:string) => username.set(v))
 user?.get('email').on((v:string) => email.set(v))
+user?.get('favored').on((v:string) => favored.set(JSON.parse(v)))
 
 db?.on('auth', async() => {
     const readUsername = await user.get('alias');
     const readEmail = await user.get('email');
+    const readFavored = await user.get('favored');
     username.set(readUsername)
     email.set(readEmail)
+    favored.set(JSON.parse(readFavored))
 })
 
 export async function login(username:string, password:string):Promise<void> {
@@ -68,5 +73,30 @@ export function logout():Promise<void> {
             if (ack.err) reject(ack.err)
             else resolve()
         })
+    })
+}
+
+export function favor(room:string):Promise<void> {
+    return new Promise((resolve, reject) => {
+        favored.update(f => {
+            f.push(room)
+            return f
+        })
+        user.get("favored").put(JSON.stringify(favored))
+        resolve()
+    })
+}
+
+export function unFavor(room:string):Promise<void> {
+    return new Promise((resolve, reject) => {
+        favored.update(f => {
+            const index = f.indexOf(room, 0);
+            if (index > -1) {
+                f.splice(index, 1);
+            }
+            return f
+        })
+        user.get("favored").put(JSON.stringify(favored))
+        resolve()
     })
 }

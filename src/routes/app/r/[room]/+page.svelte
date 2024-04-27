@@ -4,7 +4,7 @@
 	import RoomHeader from "$lib/components/roomHeader.svelte";
 	import RoomView from "$lib/components/roomView.svelte";
 	import Prompt from "$lib/components/prompt.svelte";
-	import { db, user } from "$lib/auth";
+	import { db, favored, user } from "$lib/auth";
     import GUN from "gun";
 	import type { PageData } from "./$types";
 
@@ -22,7 +22,7 @@
     }
 
     function roomChanged(){
-        currentRoom = new Room(data.room, false)
+        currentRoom = new Room(data.room, $favored.includes(data.room))
         currentBubbles = []
         db.get('rooms').get(currentRoom.name)
             .map()
