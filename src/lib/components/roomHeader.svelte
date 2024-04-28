@@ -1,26 +1,46 @@
 <script lang="ts">
-	import { favor, unFavor } from "$lib/auth";
+	import { user } from "$lib/auth";
 	import type { Room } from "$lib/classes/room";
 	import Icon from "@iconify/svelte";
 	import { Avatar } from "@skeletonlabs/skeleton";
 
     export let room:Room
 
+    let favoredRooms:String[] = []
+
     function onFavor(){
-        favor(room.name)
+        favoredRooms.push(room.name)
+        user.get('favored').put(JSON.stringify(favoredRooms))
     }
 
     function onUnFavor(){
-        unFavor(room.name)
+        const index = favoredRooms.indexOf(room.name, 0);
+        if (index > -1) {
+            favoredRooms.splice(index, 1);
+        }
+        user.get('favored').put(JSON.stringify(favoredRooms))
     }
+
+    function roomChanged(){
+        user?.get('favored').on((data:any) => {
+            favoredRooms = JSON.parse(data)
+            room.favored = favoredRooms.includes(room.name)
+        })
+    }
+
+    $: if(room) roomChanged()
 </script>
 
 <div class="flex justify-between items-center space-x-2">
     <Avatar src="https://api.dicebear.com/8.x/icons/svg?seed={room.name}" width="w-8 h-8 rounded-md"/>
     <h3 class="h-full h3 text-ellipsis overflow-hidden">{room.name}</h3>
     {#if room.favored}
-        <Icon icon="mdi:star-check" class="min-w-8 min-h-8 text-primary-500" on:click={onUnFavor}/>
+        <button on:click={onUnFavor}>
+            <Icon icon="mdi:star-check" class="min-w-8 min-h-8 text-primary-500"/>
+        </button>
     {:else}
-        <Icon icon="mdi:star-outline" class="min-w-8 min-h-8" on:click={onFavor}/>
+    <button on:click={onFavor}>
+        <Icon icon="mdi:star-outline" class="min-w-8 min-h-8" />
+    </button>
     {/if}
 </div>

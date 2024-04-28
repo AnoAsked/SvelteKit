@@ -60,7 +60,7 @@
 	}
 </script>
 
-<Toast />
+<Toast zIndex="z-[1000]"/>
 <Modal components={modalRegistry} />
 
 <!-- App Shell -->

@@ -6,13 +6,11 @@
 	import { goto } from "$app/navigation";
     import { errorToast, successToast } from '$lib/toast';
     import { getModalStore, type ModalSettings } from '@skeletonlabs/skeleton';
-	import { onMount } from "svelte";
-	import type { MouseEventHandler } from "svelte/elements";
 
     const modalStore = getModalStore();
     const toastStore = getToastStore();
 
-    let connectedPeerCount = 0;
+    let connected:boolean|undefined = undefined;
 
     function onLogout(){
         toastStore.trigger(successToast("Logging out of AnoAsked."))
@@ -34,7 +32,8 @@
     }
 
     function onDeleteLocal(){
-        alert("not implemented")
+        localStorage.clear()
+        toastStore.trigger(successToast("Local storage has been cleared."))
     }
 
     const userPopup: PopupSettings = {
@@ -42,17 +41,6 @@
         target: 'userPopup',
         placement: 'bottom-end',
     };
-
-    function checkPeerCount() {
-        const opt_peers = db.back('opt.peers'); // get peers, as configured in the setup
-        connectedPeerCount = 0
-        let peer: any;
-        for (peer of Object.values(opt_peers)) {
-            if (peer && peer.wire && peer.wire.readyState === 1 && peer.wire.OPEN === 1 && peer.wire.constructor.name === 'WebSocket') {
-                connectedPeerCount++;
-            }
-        }
-    }
 
     const drawerStore = getDrawerStore();
     function drawerOpen(): void {
@@ -78,10 +66,6 @@
         </div>
     </svelte:fragment>
     <svelte:fragment slot="trail">
-        <button type="button" class="btn btn-sm variant-soft-error w-full" on:click={checkPeerCount}>
-            <span><Icon icon="mdi:beer" class="w-6 h-6" /></span>
-            <span>Count: {connectedPeerCount}</span>
-        </button>
         {#if $username}
             <button use:popup={userPopup}>
                 {#if $username}
@@ -105,9 +89,9 @@
                         <span><Icon icon="mdi:github" class="w-6 h-6" /></span>
                         <span>Visit me on github</span>
                     </a>
-                    <button type="button" class="btn btn-sm variant-soft w-full">
+                    <button type="button" class="btn btn-sm variant-soft w-full" on:click={onDeleteLocal}>
                         <span><Icon icon="mdi:trash" class="w-6 h-6" /></span>
-                        <span>Delete local data</span>
+                        <span>Delete local storage</span>
                     </button>
                     <button type="button" class="btn btn-sm variant-soft-error w-full" on:click={onLogout}>
                         <span><Icon icon="mdi:logout" class="w-6 h-6" /></span>

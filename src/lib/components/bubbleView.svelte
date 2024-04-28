@@ -2,7 +2,6 @@
 	import { username } from "$lib/auth";
 	import type { Bubble } from "$lib/classes/bubble";
 	import { Avatar } from "@skeletonlabs/skeleton";
-	import { onMount } from "svelte";
 
     export let bubble:Bubble;
 </script>

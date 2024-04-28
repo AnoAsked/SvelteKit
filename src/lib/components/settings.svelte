@@ -49,7 +49,7 @@
 	<div class="modal-example-form card p-4 w-modal shadow-xl space-y-4">
 		<div class="flex justify-between">
 			<div class="flex flex-col space-y-2">
-				<h3 class="h3 flex items-center"><Icon icon="mdi:settings" class="w-6 h-6 mr-1 text-primary-500" />User settings</h3>
+				<h3 class="h3 flex items-center"><Icon icon="mdi:settings" class="w-6 h-6 mr-2" />User settings</h3>
 				<h4 class="h4 flex items-center">{$username}</h4>
 				<div class="flex space-x-2">
 					<p>Status:</p>

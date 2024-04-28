@@ -4,6 +4,8 @@
 	import TreeViewRoom from '$lib/components/roomTreeItem.svelte';
 	import { Room } from "$lib/classes/room";
 	import { goto } from "$app/navigation";
+	import { onMount } from "svelte";
+	import { user } from "$lib/auth";
 
 	const drawerStore = getDrawerStore();
 
@@ -15,8 +17,15 @@
 		drawerStore.close();
 	}
 
-	favouriteRooms = [{name: 'favourites 1', favored: true}, {name: 'favourites 2', favored: true}, {name: 'favourites 3', favored: true}, {name: 'trending 1', favored: true}];
-	trendingRooms = [{name: 'trending 1', favored: true}, {name: 'trending 2', favored: false}, {name: 'trending 3', favored: false}];
+	onMount(() => {
+        user?.get('favored').on((data:any) => {
+			favouriteRooms = []
+			JSON.parse(data).forEach((name:string) => {
+				favouriteRooms.push(new Room(name, true))
+			});
+			favouriteRooms = favouriteRooms
+        })
+	})
 </script>
 
 <TreeView>

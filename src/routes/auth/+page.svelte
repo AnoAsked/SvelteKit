@@ -12,11 +12,11 @@
 		</figure>
 		<!-- / -->
 		<div class="flex flex-col justify-center space-y-2">
-			<a type="button" class="btn btn-md variant-soft-success" href="/auth/login">
+			<a class="btn btn-md variant-soft-success" href="/auth/login">
 				<Icon icon="mdi:verified" class="w-6 h-6" />
 				<span>Continue verified</span>
 			</a>
-			<a type="button" class="btn btn-md variant-soft-error" href="/app">
+			<a class="btn btn-md variant-soft-error" href="/app">
 				<Icon icon="mdi:anonymous" class="w-6 h-6" />
 				<span>Continue anonymous</span>
 			</a>
