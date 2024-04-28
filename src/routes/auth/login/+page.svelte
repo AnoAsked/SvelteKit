@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Icon from '@iconify/svelte';
     import { login } from '$lib/auth';
-    import { ConicGradient, ProgressRadial, focusTrap, getToastStore } from '@skeletonlabs/skeleton';
+    import { ProgressRadial, focusTrap, getToastStore } from '@skeletonlabs/skeleton';
 	import { goto } from '$app/navigation';
 	import { errorToast, successToast } from '$lib/toast';
     

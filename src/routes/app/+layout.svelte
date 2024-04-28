@@ -1,10 +1,8 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
-	import { goto } from '$app/navigation';
-    import { user, username } from '$lib/auth';
+    import { username } from '$lib/auth';
 	import RoomBar from '$lib/components/roomBar.svelte';
 	import { AppShell, Drawer, getModalStore, type ModalSettings } from '@skeletonlabs/skeleton';
-	import { onMount } from 'svelte';
 	import { page } from '$app/stores';
 
     const modalStore = getModalStore();
