@@ -5,12 +5,10 @@
 <div class="container h-full mx-auto flex justify-center items-center">
 	<div class="space-y-10 text-center flex flex-col items-center">
 		<h2 class="h2">Welcome to <span class="h1 pixeled text-primary-500">AnoAsked</span></h2>
-		<!-- Animated Logo -->
 		<figure class="flex relative flex-col">
 			<section class="img-bg img-animation" />
 			<img src="/favicon.svg" alt="AnoAsked Logo" class="img-bg" />
 		</figure>
-		<!-- / -->
 		<div class="flex flex-col justify-center space-y-2">
 			<a class="btn btn-md variant-soft-success" href="/auth/login">
 				<Icon icon="mdi:verified" class="w-6 h-6" />

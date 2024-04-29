@@ -5,12 +5,12 @@
 	import { Room } from "$lib/classes/room";
 	import { goto } from "$app/navigation";
 	import { onMount } from "svelte";
-	import { user } from "$lib/auth";
+	import { user, username } from "$lib/auth";
 
 	const drawerStore = getDrawerStore();
 
 	export let favouriteRooms:Room[] = [];
-	export let trendingRooms:Room[] = [];
+	export let personalTags:String[] = [];
 
 	function selectRoom(route:string) {
 		goto(route)
@@ -45,14 +45,18 @@
 		</svelte:fragment>
 	</TreeViewItem>
 	<TreeViewItem>
-		<svelte:fragment slot="lead"><Icon icon="mdi:trending-up" class="w-6 h-6" /></svelte:fragment>
-		Trending rooms
+		<svelte:fragment slot="lead"><Icon icon="mdi:tags" class="w-6 h-6" /></svelte:fragment>
+		Posts with your tags
 		<svelte:fragment slot="children">
-			{#each trendingRooms as room}
-				<TreeViewItem on:click={() => selectRoom("/app/r/"+room.name)}>
-					<TreeViewRoom room={room}/>
+			{#each personalTags as tag}
+				<TreeViewItem on:click={() => selectRoom("/app/t/"+tag)}>
+					<p>{tag}</p>
 				</TreeViewItem>
 			{/each}
 		</svelte:fragment>
+	</TreeViewItem>
+	<TreeViewItem on:click={() => selectRoom("/app/@/"+$username)}>
+		<svelte:fragment slot="lead"><Icon icon="mdi:at" class="w-6 h-6" /></svelte:fragment>
+		<a href="/app/@/{$username}">Mentioned posts</a>
 	</TreeViewItem>
 </TreeView>

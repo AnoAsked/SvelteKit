@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { AppBar, Avatar, getDrawerStore, LightSwitch, popup, type PopupSettings } from "@skeletonlabs/skeleton";
-    import { username, logout, db } from "$lib/auth";
+    import { username, logout, db, user } from "$lib/auth";
     import { getToastStore } from '@skeletonlabs/skeleton';
 	import Icon from "@iconify/svelte";
 	import { goto } from "$app/navigation";
@@ -16,7 +16,7 @@
         toastStore.trigger(successToast("Logging out of AnoAsked."))
         logout()
         .then(() => {
-            goto("/")
+            goto("/auth")
         })
         .catch(err => toastStore.trigger(errorToast(err)))
     }
@@ -32,8 +32,13 @@
     }
 
     function onDeleteLocal(){
-        localStorage.clear()
-        toastStore.trigger(successToast("Local storage has been cleared."))
+        toastStore.trigger(successToast("Clearing local data and logging out."))
+        logout()
+        .then(() => {
+            localStorage.clear()
+            goto("/auth")
+        })
+        .catch(err => toastStore.trigger(errorToast(err)))
     }
 
     const userPopup: PopupSettings = {
@@ -89,11 +94,11 @@
                         <span><Icon icon="mdi:github" class="w-6 h-6" /></span>
                         <span>Visit me on github</span>
                     </a>
-                    <button type="button" class="btn btn-sm variant-soft w-full" on:click={onDeleteLocal}>
+                    <button type="button" class="btn btn-sm variant-soft-error w-full" on:click={onDeleteLocal}>
                         <span><Icon icon="mdi:trash" class="w-6 h-6" /></span>
-                        <span>Delete local storage</span>
+                        <span>Delte and logout</span>
                     </button>
-                    <button type="button" class="btn btn-sm variant-soft-error w-full" on:click={onLogout}>
+                    <button type="button" class="btn btn-sm variant-soft-warning w-full" on:click={onLogout}>
                         <span><Icon icon="mdi:logout" class="w-6 h-6" /></span>
                         <span>Logout</span>
                     </button>
