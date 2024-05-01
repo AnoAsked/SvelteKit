@@ -18,6 +18,7 @@
             const data = user.get('all').set({message: event.detail.message, attachment: event.detail?.attachment})
             const index = new Date().toISOString();
             db.get('rooms').get(currentRoom.name).get(index).put(data)
+            currentBubbles=currentBubbles
         }
     }
 
