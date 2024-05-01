@@ -61,9 +61,11 @@
 <AppBar>
     <svelte:fragment slot="lead">
         <div class="flex items-center">
-            <button class="md:hidden btn btn-sm mr-4" on:click={drawerOpen}>
-                <span><Icon icon="mdi:forwardburger" class="w-6 h-6" /></span>
-            </button>
+            {#if $username}
+                <button class="md:hidden btn btn-sm mr-4" on:click={drawerOpen}>
+                    <span><Icon icon="mdi:forwardburger" class="w-6 h-6" /></span>
+                </button>
+            {/if}
             <a class="flex space-x-2 hover:text-primary-500" href="/">
                 <img src="/favicon.svg" alt="AnoAsked Logo" class="w-6 h-6" />
                 <strong class="text-xl pixeled">AnoAsked</strong>
