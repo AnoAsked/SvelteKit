@@ -73,6 +73,7 @@
         </div>
     </svelte:fragment>
     <svelte:fragment slot="trail">
+        <LightSwitch title="Switch dark and light mode."/>
         {#if $username}
             <button use:popup={userPopup}>
                 {#if $username}
@@ -88,10 +89,6 @@
                         <span><Icon icon="mdi:settings" class="w-6 h-6" /></span>
                         <span>Settings</span>
                     </button>
-                    <div class="btn btn-sm variant-soft w-full active:">
-                        <span><LightSwitch title="Switch dark and light mode."/></span>
-                        <span>Change</span>
-                    </div>
                     <a type="button" class="btn btn-sm variant-soft w-full" href="https://github.com/AnoAsked" target="_blank" rel="noreferrer">
                         <span><Icon icon="mdi:github" class="w-6 h-6" /></span>
                         <span>Visit me on github</span>
