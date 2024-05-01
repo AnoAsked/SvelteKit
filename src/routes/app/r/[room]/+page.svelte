@@ -16,17 +16,22 @@
 
     async function onMessageSend(event:any){
         if(currentRoom){
-            const data = user.get('all').set({message: event.detail.message, attachment: event.detail?.attachment})
+            const bubble = user.get('all').set({message: event.detail.message, attachment: event.detail?.attachment})
 
             let id = ''
             let dublicate = true
 
+            // Check if id exists
             while (dublicate) {
                 id = uuidv4()
-                await db.get('rooms').get(currentRoom.name).get(id, (ack:any) => dublicate = ack.put)
+                await db.get('bubbles').get(id, (ack:any) => dublicate = ack.put)
             }
 
-            db.get('rooms').get(currentRoom.name).get(id).put(data)
+            // create new in b/hash
+            db.get('bubbles').get(id).put(bubble)
+            // add hash to r/room
+            db.get('rooms').get(currentRoom.name).set({id: id})
+
             currentBubbles=currentBubbles
         }
     }
@@ -37,18 +42,24 @@
 
         db.get('rooms').get(currentRoom.name)
             .map()
-            .on(async (data:any) => {
-                if (data){
-                    let bubble = new Bubble(
-                        await db.user(data).get('alias'), 
-                        new Date((GUN.state as any).is(data, 'message')),
-                        data?.message,
-                        data?.attachment
-                    )
+            .on(async (bubbleId:any) => {
+                if (bubbleId){
+                    db.get('bubbles').get(bubbleId.id)
+                    .on(async (bubble:any) => {
+                        if (bubble){
+                            let add = new Bubble(
+                                bubbleId.id,
+                                await db.user(bubble).get('alias'), 
+                                new Date((GUN.state as any).is(bubble, 'message')),
+                                bubble?.message,
+                                bubble?.attachment
+                            )
 
-                    if (bubble.message && !currentBubbles.some( ({timestamp}) => timestamp.valueOf() == bubble.timestamp.valueOf())) {
-                        currentBubbles = [...currentBubbles, bubble].sort((a, b) => a.timestamp.valueOf() - b.timestamp.valueOf());
-                    }
+                            if (add.message && !currentBubbles.some( ({timestamp}) => timestamp.valueOf() == add.timestamp.valueOf())) {
+                                currentBubbles = [...currentBubbles, add].sort((a, b) => a.timestamp.valueOf() - b.timestamp.valueOf());
+                            }
+                        }
+                    })
                 }
             })
     }
