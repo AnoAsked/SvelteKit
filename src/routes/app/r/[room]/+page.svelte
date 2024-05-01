@@ -14,7 +14,7 @@
     let currentRoom:Room;
     let currentBubbles:Bubble[] = [];
 
-    function onMessageSend(event:any){
+    async function onMessageSend(event:any){
         if(currentRoom){
             const data = user.get('all').set({message: event.detail.message, attachment: event.detail?.attachment})
 
@@ -23,7 +23,8 @@
 
             while (dublicate) {
                 id = uuidv4()
-                db.get('rooms').get(currentRoom.name).get(id, (ack:any) => dublicate = ack.put)
+                console.log(id)
+                await db.get('rooms').get(currentRoom.name).get(id, (ack:any) => dublicate = ack.put)
             }
 
             db.get('rooms').get(currentRoom.name).get(id).put(data)
