@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Icon from "@iconify/svelte";
-	import { Avatar, TreeView, TreeViewItem, getDrawerStore } from "@skeletonlabs/skeleton";
+	import { TreeView, TreeViewItem, getDrawerStore } from "@skeletonlabs/skeleton";
 	import TreeViewRoom from '$lib/components/roomTreeItem.svelte';
 	import { Room } from "$lib/classes/room";
 	import { goto } from "$app/navigation";

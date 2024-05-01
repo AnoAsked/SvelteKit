@@ -1,10 +1,14 @@
 <script>
 	import { goto } from "$app/navigation";
 	import Icon from "@iconify/svelte";
+    import { getDrawerStore } from "@skeletonlabs/skeleton";
+
+    const drawerStore = getDrawerStore();
 
     export let name = ''
 
     function onClick(){
+        drawerStore.close();
         goto(`/app/r/${name}`)
         name = ''
     }

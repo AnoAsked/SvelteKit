@@ -19,7 +19,7 @@
 	}
 </script>
 
-<div class="input-group input-group-divider grid-cols-[auto_1fr_auto] rounded-container-token">
+<form class="input-group input-group-divider grid-cols-[auto_1fr_auto] rounded-container-token">
 	<div class="flex flex-col input-group-shim !p-0">
 		<button class="btn rounded-none variant-filled-surface h-full" title="Add tags" disabled={true}><Icon icon="mdi:tags" class="w-6 h-6" /></button>
 		<button class="btn rounded-none variant-filled-surface h-full" title="Add an attachment" disabled={true}><Icon icon="mdi:attachment" class="w-6 h-6" /></button>
@@ -36,4 +36,4 @@
 		<button class="btn rounded-none variant-filled-surface h-full" title="Encrypt message" disabled={true}><Icon icon="mdi:key" class="w-6 h-6" /></button>
 		<button class="btn rounded-none variant-filled-surface h-full {message ? '!bg-primary-500' : ''}" title="Send message" disabled={!message} on:click|preventDefault={onSend}><Icon icon="mdi:send" class="w-6 h-6" /></button>
 	</div>
-</div>
+</form>

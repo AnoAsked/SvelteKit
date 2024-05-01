@@ -8,10 +8,10 @@
     import GUN from "gun";
 	import type { PageData } from "./$types";
 
+    export let data:PageData
+
     let currentRoom:Room;
     let currentBubbles:Bubble[] = [];
-
-    export let data:PageData
 
     function onMessageSend(event:any){
         if(currentRoom){
@@ -24,9 +24,10 @@
     function roomChanged(){
         currentRoom = new Room(data.room, false)
         currentBubbles = []
+
         db.get('rooms').get(currentRoom.name)
             .map()
-            .once(async (data:any) => {
+            .on(async (data:any) => {
                 if (data){
                     let bubble = new Bubble(
                         await db.user(data).get('alias'), 
@@ -35,8 +36,8 @@
                         data?.attachment
                     )
 
-                    if (bubble.message){
-                        currentBubbles = [...currentBubbles as [], bubble];
+                    if (bubble.message && !currentBubbles.some( ({timestamp}) => timestamp.valueOf() == bubble.timestamp.valueOf())) {
+                        currentBubbles = [...currentBubbles, bubble].sort((a, b) => a.timestamp.valueOf() - b.timestamp.valueOf());
                     }
                 }
             })
