@@ -14,9 +14,6 @@
     let loading: boolean = true
 
     onMount(() => {
-        console.log(data.username)
-        console.log(data.password)
-
         login(data.username, data.password)
         .then(() => {
             toastStore.trigger(successToast("Logged into AnoAsked via anonymous link."))

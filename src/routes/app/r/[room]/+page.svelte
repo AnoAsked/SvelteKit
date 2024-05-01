@@ -23,7 +23,6 @@
 
             while (dublicate) {
                 id = uuidv4()
-                console.log(id)
                 await db.get('rooms').get(currentRoom.name).get(id, (ack:any) => dublicate = ack.put)
             }
 
