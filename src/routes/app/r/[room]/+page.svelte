@@ -7,6 +7,7 @@
 	import { db, user } from "$lib/auth";
     import GUN from "gun";
 	import type { PageData } from "./$types";
+    import { v4 as uuidv4 } from 'uuid';
 
     export let data:PageData
 
@@ -16,8 +17,16 @@
     function onMessageSend(event:any){
         if(currentRoom){
             const data = user.get('all').set({message: event.detail.message, attachment: event.detail?.attachment})
-            const index = new Date().toISOString();
-            db.get('rooms').get(currentRoom.name).get(index).put(data)
+
+            let id = ''
+            let dublicate = true
+
+            while (dublicate) {
+                id = uuidv4()
+                db.get('rooms').get(currentRoom.name).get(id, (ack:any) => dublicate = ack.put)
+            }
+
+            db.get('rooms').get(currentRoom.name).get(id).put(data)
             currentBubbles=currentBubbles
         }
     }
@@ -33,7 +42,7 @@
                     let bubble = new Bubble(
                         await db.user(data).get('alias'), 
                         new Date((GUN.state as any).is(data, 'message')),
-                        data.message,
+                        data?.message,
                         data?.attachment
                     )
 

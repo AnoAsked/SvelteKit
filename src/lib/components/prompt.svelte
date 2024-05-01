@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { db } from "$lib/auth";
 	import Icon from "@iconify/svelte";
 	import { createEventDispatcher } from 'svelte';
 
