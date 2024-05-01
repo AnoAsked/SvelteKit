@@ -3,17 +3,19 @@
     import { username } from '$lib/auth';
 	import RoomBar from '$lib/components/roomBar.svelte';
 	import { AppShell, Drawer, getModalStore, type ModalSettings } from '@skeletonlabs/skeleton';
-	import { page } from '$app/stores';
+	import { afterNavigate } from '$app/navigation';
 
     const modalStore = getModalStore();
 
-    if($page.url.searchParams.get('verify')){
-        const modal: ModalSettings = {
-            type: 'component',
-            component: 'settingsModal',
-        };
-        modalStore.trigger(modal);
-    }
+    afterNavigate(({from}) => {
+        if(from?.url.pathname === "/auth/register"){
+            const modal: ModalSettings = {
+                type: 'component',
+                component: 'settingsModal',
+            };
+            modalStore.trigger(modal);
+        }
+    }) 
 </script>
 
 {#if ($username && browser)}
