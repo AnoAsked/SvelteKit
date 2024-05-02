@@ -48,20 +48,23 @@
 	onMount(() => {
 		db.get('bubbles').get(bubble.id).get("stats").map().on((data:any) => {
 			if(data){
-				if (data.stat === "liked" && !likes.includes(data.name))
-					likes.push(data.name);
+				if (data.stat === "liked") {
+					if (!likes.includes(data.name))
+						likes.push(data.name);
 					const indexOfDislikes = dislikes.indexOf(data.name, 0);
 					if (indexOfDislikes > -1) {
 						dislikes.splice(indexOfDislikes, 1);
 					}
-				else if (data.stat === "disliked" && !dislikes.includes(data.name)){
-					dislikes.push(data.name);
+				}
+				if (data.stat === "disliked"){
+					if (!dislikes.includes(data.name))
+						dislikes.push(data.name);
 					const indexOfLikes = likes.indexOf(data.name, 0);
 					if (indexOfLikes > -1) {
 						likes.splice(indexOfLikes, 1);
 					}
 				}
-				else if (data.stat === "none"){
+				if (data.stat === "none"){
 					const indexOfLikes = likes.indexOf(data.name, 0);
 					if (indexOfLikes > -1) {
 						likes.splice(indexOfLikes, 1);
