@@ -74,10 +74,6 @@
 						dislikes.splice(indexOfDislikes, 1);
 					}
 				}
-				console.log("likes:")
-				console.log(likes)
-				console.log("dislikes:")
-				console.log(dislikes)
 				likes = likes
 				dislikes = dislikes
 			}
@@ -95,31 +91,31 @@
 			<small class="opacity-50">{bubble.timestamp.toLocaleTimeString()}</small>
 		</header>
 		<p>{bubble.message}</p>
-		<div class="flex justify-between">
+		<div class="flex justify-between space-x-2">
 			<a href="/app/b/{bubble.id}" title="Comments">
 				<Icon icon="mdi:comment-text-multiple-outline" class="min-w-6 min-h-6"/>
 			</a>
 
-			<div class="flex space-x-2">
+			<div class="flex space-x-5">
 				{#if likes.includes($username)}
-					<button on:click={() => like(false)} title="Like bubble">
+					<button on:click={() => like(false)} title="Like bubble" class="flex space-x-2 items-center">
 						<Icon icon="mdi:like" class="min-w-6 min-h-6 text-primary-500"/>
 						<span>{likes.length}</span>
 					</button>
 				{:else}
-					<button on:click={() => like(true)} title="Unlike bubble">
+					<button on:click={() => like(true)} title="Unlike bubble" class="flex space-x-2 items-center">
 						<Icon icon="mdi:like-outline" class="min-w-6 min-h-6" />
 						<span>{likes.length}</span>
 					</button>
 				{/if}
 	
 				{#if dislikes.includes($username)}
-					<button on:click={() => dislike(false)} title="Like bubble">
+					<button on:click={() => dislike(false)} title="Like bubble" class="flex space-x-2 items-center">
 						<Icon icon="mdi:dislike" class="min-w-6 min-h-6 text-primary-500"/>
 						<span>{dislikes.length}</span>
 					</button>
 				{:else}
-					<button on:click={() => dislike(true)} title="Unlike bubble">
+					<button on:click={() => dislike(true)} title="Unlike bubble" class="flex space-x-2 items-center">
 						<Icon icon="mdi:dislike-outline" class="min-w-6 min-h-6" />
 						<span>{dislikes.length}</span>
 					</button>

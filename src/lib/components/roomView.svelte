@@ -19,7 +19,7 @@
     $: if(bubbles && element) scrollToBottom(element)
 </script>
 
-<div class="grow flex flex-col overflow-auto h-96" bind:this={element}>
+<div class="grow flex flex-col overflow-auto h-0" bind:this={element}>
     <div class="mr-2 space-y-2">
         {#each bubbles as bubble, index (bubble?.timestamp)}
             {#if bubble.timestamp.toLocaleDateString() !== bubbles[index-1]?.timestamp.toLocaleDateString()}

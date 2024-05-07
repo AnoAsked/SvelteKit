@@ -50,7 +50,7 @@
                             let add = new Bubble(
                                 bubbleId.id,
                                 bubble.room,
-                                await db.user(bubble).get('alias'), 
+                                await db.user(bubble).get('alias') ?? await db.user(bubble).get('alias'), 
                                 new Date((GUN.state as any).is(bubble, 'message')),
                                 bubble?.message,
                                 bubble?.attachment
