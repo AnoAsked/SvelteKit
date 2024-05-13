@@ -18,7 +18,7 @@
 
 		register(username, password, '')
 		.then(() => {
-			toastStore.trigger(successToast("Created random user for anonymous use."))
+			toastStore.trigger(successToast("Created user for anonymous use."))
 			navigator.clipboard.writeText(`http://${window.location.host}/auth/link/${username}/${password}`)
 			toastStore.trigger(warningToast("Copied user link to clipboard. (unsafe)"))
 			goto("/app/home", {replaceState: true})

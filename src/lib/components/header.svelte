@@ -95,7 +95,7 @@
                     </a>
                     <button type="button" class="btn btn-sm variant-soft-error w-full" on:click={onDeleteLocal}>
                         <span><Icon icon="mdi:trash" class="w-6 h-6" /></span>
-                        <span>Delte and logout</span>
+                        <span>Delete and logout</span>
                     </button>
                     <button type="button" class="btn btn-sm variant-soft-warning w-full" on:click={onLogout}>
                         <span><Icon icon="mdi:logout" class="w-6 h-6" /></span>

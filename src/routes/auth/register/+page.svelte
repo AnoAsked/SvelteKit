@@ -4,8 +4,6 @@
     import { focusTrap, getToastStore, ProgressRadial, type ToastSettings } from '@skeletonlabs/skeleton';
 	import { goto } from '$app/navigation';
 	import { errorToast, successToast } from '$lib/toast';
-	import api from '$lib/api';
-	import { json } from '@sveltejs/kit';
     
     const toastStore = getToastStore();
 
