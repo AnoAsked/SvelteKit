@@ -17,7 +17,7 @@
         login(data.username, data.password)
         .then(() => {
             toastStore.trigger(successToast("Logged into AnoAsked via anonymous link."))
-            goto("/app/home", {replaceState: true})
+            goto("/app/r/Home", {replaceState: true})
         })
         .catch(err => toastStore.trigger(errorToast(err)))
         .finally(() => loading = false)

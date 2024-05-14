@@ -17,7 +17,7 @@
         login(username, password)
         .then(() => {
             toastStore.trigger(successToast("Logged into AnoAsked."))
-            goto("/app/home", {replaceState: true})
+            goto("/app/r/Home", {replaceState: true})
         })
         .catch(err => toastStore.trigger(errorToast(err)))
         .finally(() => loading = false)

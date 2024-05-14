@@ -29,9 +29,9 @@
 </script>
 
 <TreeView>
-	<TreeViewItem on:click={() => selectRoom("/app/home")}>
+	<TreeViewItem on:click={() => selectRoom("/app/r/Home")}>
 		<svelte:fragment slot="lead"><Icon icon="mdi:globe" class="w-6 h-6" /></svelte:fragment>
-		<a href="/app/home">Home</a>
+		<a href="/app/r/Home">Home</a>
 	</TreeViewItem>
 	<TreeViewItem>
 		<svelte:fragment slot="lead"><Icon icon="mdi:star-check" class="w-6 h-6" /></svelte:fragment>
