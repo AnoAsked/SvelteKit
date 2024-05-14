@@ -16,6 +16,8 @@
 	let likes:string[] = []
 	let dislikes:string[] = []
 
+	let attachmentOfTypeVideo:boolean|undefined = undefined
+
 	let decryptionKey = ''
 	let decryptedMessage:string|undefined = undefined
 	let decryptedAttachment:string|undefined = undefined
@@ -104,12 +106,13 @@
 		if(SEA.err){
 			toastStore.trigger(errorToast(SEA.err))		
 		}
+		attachmentOfTypeVideo = isVideoType()
 	}
 
-	function isVideoType():boolean{
+	function isVideoType():boolean|undefined{
 		const upper = decryptedAttachment?.toLocaleUpperCase()
-		if(!upper) return false 
-		return (
+		if(!upper) return undefined 
+		if (
 			upper.endsWith(".MP4") ||
 			upper.endsWith(".MPEG") ||
 			upper.endsWith(".AVI") ||
@@ -119,7 +122,15 @@
 			upper.endsWith(".X-FLV") ||
 			upper.endsWith(".X-MSVIDEO") ||
 			upper.endsWith(".X-MS-WMV")
-		)
+		) return true
+		if(
+			upper.endsWith(".JPEG") ||
+			upper.endsWith(".PNG") ||
+			upper.endsWith(".GIF") ||
+			upper.endsWith(".APNG") ||
+			upper.endsWith(".TIFF")
+		) return false
+		return undefined
 	}
 </script>
 
@@ -141,9 +152,9 @@
 				class="bg-transparent border-0 ring-0 w-full resize-none max-h-60"
 				rows={decryptedMessage.split('\n').length}
 			/>
-			{#if decryptedAttachment}
+			{#if attachmentOfTypeVideo !== undefined}
 				<div class="pb-2">
-					{#if isVideoType()}
+					{#if attachmentOfTypeVideo}
 						<video controls class="w-full mx-auto max-h-96">
 							<source src={decryptedAttachment}>
 							<track kind="captions">
