@@ -1,5 +1,5 @@
 <script lang="ts">
-	import api from "$lib/api";
+	import vapi from "$lib/vapi";
 	import { email, username } from "$lib/auth";
 	import { Status } from "$lib/enums/status";
 	import { errorToast, successToast, warningToast } from "$lib/toast";
@@ -16,7 +16,7 @@
 
 	function onVerify(){
 		loading = true
-		api.post("verify", {
+		vapi.post("verify", {
 			username: $username,
 			email: $email
 		}).then(res => {
@@ -36,7 +36,7 @@
 	}
 
 	function onResend(){
-		api.post("resend", {
+		vapi.post("resend", {
 			username: $username,
 			email: $email
 		}).then(res => {
@@ -56,7 +56,7 @@
 
 	function onConfirm(){
 		loading = true
-		api.post("confirm", {
+		vapi.post("confirm", {
 			email: $email,
 			code: code
 		}).then(res => {

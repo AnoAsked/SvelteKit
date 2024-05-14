@@ -2,7 +2,7 @@
 	import '../app.postcss';
 
 	// Skeleton
-	import { AppShell, Toast, initializeStores, Modal, type ModalComponent, storePopup, Drawer } from '@skeletonlabs/skeleton';
+	import { AppShell, Toast, initializeStores, Modal, type ModalComponent, storePopup } from '@skeletonlabs/skeleton';
 	initializeStores();
 	
 	// Highlight JS
@@ -29,11 +29,10 @@
 	import SettingsModal from '$lib/components/settings.svelte';
 
 	const modalRegistry: Record<string, ModalComponent> = {
-		settingsModal: { ref: SettingsModal },
+		settingsModal: { ref: SettingsModal }
 	};
 
 	// Routing
-	import { onMount } from 'svelte';
 	import { browser } from '$app/environment';
 	import { username } from '$lib/auth';
 	import { goto } from '$app/navigation';

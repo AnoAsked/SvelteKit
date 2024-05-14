@@ -120,7 +120,8 @@
 			<textarea
 				readonly
 				bind:value={decryptedMessage}
-				class="bg-transparent border-0 ring-0 w-full resize-none"
+				class="bg-transparent border-0 ring-0 w-full resize-none max-h-60"
+				rows={decryptedMessage.split('\n').length + 1}
 			/>
 		{/if}
 		<div class="flex justify-between space-x-2">

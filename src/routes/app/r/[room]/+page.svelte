@@ -9,16 +9,31 @@
 	import type { PageData } from "./$types";
     import { v4 as uuidv4 } from 'uuid';
 	import SEA from "gun/sea";
+	import iapi from "$lib/iapi";
+	import { getToastStore } from "@skeletonlabs/skeleton";
+	import { errorToast } from "$lib/toast";
+
+    const toastStore = getToastStore();
 
     export let data:PageData
+
 
     let currentRoom:Room;
     let currentBubbles:Bubble[] = [];
 
     async function onMessageSend(event:any){
         if(currentRoom){
+            iapi.post("", {
+                image: event.detail?.file
+            }).then(res => {
+                console.log(res)
+            }).catch(err => {
+                console.error(err)
+                toastStore.trigger(errorToast(err))
+            })
+
             const secret = event.detail.encryptionKey ? await SEA.encrypt(event.detail.message, event.detail.encryptionKey) : event.detail.message
-            const bubble = user.get('all').set({message: secret, attachment: event.detail?.attachment, room: currentRoom.name})
+            const bubble = user.get('all').set({message: secret, attachment: "", room: currentRoom.name})
 
             let id = ''
             let dublicate = true

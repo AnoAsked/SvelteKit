@@ -23,8 +23,6 @@
 
     function onSettings(){
         const modal: ModalSettings = {
-            title: 'User settings',
-            body: 'This data is saved encrypted.',
             type: 'component',
             component: 'settingsModal',
         };

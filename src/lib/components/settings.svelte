@@ -3,7 +3,7 @@
 	import { Avatar, getModalStore, getToastStore } from '@skeletonlabs/skeleton';
 	import Icon from '@iconify/svelte';
 	import { db, email, user, username } from '$lib/auth';
-	import api from "$lib/api";
+	import vapi from "$lib/vapi";
 	import { Status } from '$lib/enums/status';
 	import StatusBadge from '$lib/components/statusBadge.svelte';
 	import { errorToast, successToast } from '$lib/toast';
@@ -32,7 +32,7 @@
 	});
 
 	function checkStatus(){
-		api.post("check", {
+		vapi.post("check", {
 			username: $username
 		}).then(res => {
 			if (res.data.status == "FAILED")
@@ -57,7 +57,7 @@
 				</div>
 				<StatusForm status={status} checkStatus={checkStatus}/>
 			</div>
-			<Avatar src="https://api.dicebear.com/8.x/pixel-art/svg?seed={$username}" width="w-max h-max max-w-32" rounded="rounded-full"/>
+			<Avatar src="https://api.dicebear.com/8.x/pixel-art/svg?seed={$username}" width="w-full h-full max-w-32" rounded="rounded-full"/>
 		</div>
 		<article>This data is encrypted and distributed amongst multiple peers.</article>
 		<!-- Enable for debugging: -->
