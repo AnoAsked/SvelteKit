@@ -7,6 +7,12 @@
 	import type { PageData } from "./$types";
     import { v4 as uuidv4 } from 'uuid';
 	import CommentHeader from "$lib/components/commentHeader.svelte";
+	import iapi from "$lib/iapi";
+	import { getToastStore } from "@skeletonlabs/skeleton";
+	import { errorToast } from "$lib/toast";
+	import SEA from "gun/sea";
+
+    const toastStore = getToastStore();
 
     export let data:PageData
 
@@ -16,7 +22,24 @@
 
     async function onMessageSend(event:any){
         if(data.bubble){
-            const bubble = user.get('all').set({message: event.detail.message, attachment: event?.detail?.attachment, room: parent.room})
+            let attachment = ""
+            if(event?.detail?.file){
+                var formData = new FormData();
+                formData.append('image', event?.detail?.file);
+                await iapi.post("", formData).then(res => {
+                    if(res.status === 200)
+                        attachment = res.data.data.link
+                    else
+                        toastStore.trigger(errorToast(res.statusText))
+                }).catch(err => {
+                    console.error(err)
+                    toastStore.trigger(errorToast(err))
+                })
+            }
+
+            const secret_message = event.detail.encryptionKey ? await SEA.encrypt(event.detail.message, event.detail.encryptionKey) : event.detail.message
+            const secret_attachment = attachment ? event.detail.encryptionKey ? await SEA.encrypt(attachment, event.detail.encryptionKey) : attachment : ''
+            const bubble = user.get('all').set({message: secret_message, attachment: secret_attachment, room: parent.room})
 
             let id = ''
             let dublicate = true

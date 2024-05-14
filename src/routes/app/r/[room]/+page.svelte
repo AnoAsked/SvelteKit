@@ -12,7 +12,6 @@
 	import iapi from "$lib/iapi";
 	import { getToastStore } from "@skeletonlabs/skeleton";
 	import { errorToast } from "$lib/toast";
-	import axios from "axios";
 
     const toastStore = getToastStore();
 
