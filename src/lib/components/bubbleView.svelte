@@ -2,7 +2,7 @@
 	import { db, username } from "$lib/auth";
 	import type { Bubble } from "$lib/classes/bubble";
 	import Icon from "@iconify/svelte";
-	import { Avatar, getModalStore, getToastStore, popup, type ModalSettings, type PopupSettings } from "@skeletonlabs/skeleton";
+	import { Avatar, getModalStore, getToastStore, type ModalSettings } from "@skeletonlabs/skeleton";
 	import { onMount } from "svelte";
 	import 'gun/lib/unset.js';
 	import SEA from "gun/sea";
@@ -123,6 +123,17 @@
 				class="bg-transparent border-0 ring-0 w-full resize-none max-h-60"
 				rows={decryptedMessage.split('\n').length + 1}
 			/>
+			{#if bubble?.attachment}
+				{#if bubble?.attachment.endsWith(".mp4")}
+					<video controls>
+						<source src="https://stream.mux.com/DS00Spx1CV902MCtPj5WknGlR102V5HFkDe/high.mp4" type="video/mp4">
+						<track kind="captions">
+						Your browser does not support HTML video.
+					</video>
+				{:else}
+					<img src="https://i.imgur.com/dKwmURC.jpg" alt="Current post."/>
+				{/if}
+			{/if}
 		{/if}
 		<div class="flex justify-between space-x-2">
 			<div class="flex space-x-2">

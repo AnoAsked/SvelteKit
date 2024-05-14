@@ -55,8 +55,4 @@
 			{/each}
 		</svelte:fragment>
 	</TreeViewItem>
-	<TreeViewItem on:click={() => selectRoom("/app/@/"+$username)}>
-		<svelte:fragment slot="lead"><Icon icon="mdi:at" class="w-6 h-6" /></svelte:fragment>
-		<a href="/app/@/{$username}">Mentioned posts</a>
-	</TreeViewItem>
 </TreeView>

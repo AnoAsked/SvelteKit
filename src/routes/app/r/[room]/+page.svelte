@@ -12,6 +12,7 @@
 	import iapi from "$lib/iapi";
 	import { getToastStore } from "@skeletonlabs/skeleton";
 	import { errorToast } from "$lib/toast";
+	import axios from "axios";
 
     const toastStore = getToastStore();
 
@@ -23,14 +24,16 @@
 
     async function onMessageSend(event:any){
         if(currentRoom){
-            iapi.post("", {
-                image: event.detail?.file
-            }).then(res => {
-                console.log(res)
-            }).catch(err => {
-                console.error(err)
-                toastStore.trigger(errorToast(err))
-            })
+            if(event?.detail?.file){
+                var formData = new FormData();
+                formData.append('image', event?.detail?.file);
+                iapi.post("", formData).then(res => {
+                    console.log(res)
+                }).catch(err => {
+                    console.error(err)
+                    toastStore.trigger(errorToast(err))
+                })
+            }
 
             const secret = event.detail.encryptionKey ? await SEA.encrypt(event.detail.message, event.detail.encryptionKey) : event.detail.message
             const bubble = user.get('all').set({message: secret, attachment: "", room: currentRoom.name})
