@@ -106,6 +106,22 @@
 			toastStore.trigger(errorToast(SEA.err))		
 		}
 	}
+
+	function isVideoType():boolean{
+		const upper = decryptedAttachment?.toLocaleUpperCase()
+		if(!upper) return false 
+		return (
+			upper.endsWith(".MP4") ||
+			upper.endsWith(".MPEG") ||
+			upper.endsWith(".AVI") ||
+			upper.endsWith(".WEBM") ||
+			upper.endsWith(".QUICKTIME") ||
+			upper.endsWith(".X-MATROSKA") ||
+			upper.endsWith(".X-FLV") ||
+			upper.endsWith(".X-MSVIDEO") ||
+			upper.endsWith(".X-MS-WMV")
+		)
+	}
 </script>
 
 <div class="grid {bubble.user === $username ? 'grid-cols-[1fr_auto]' : 'grid-cols-[auto_1fr]'} gap-2">
@@ -128,14 +144,14 @@
 			/>
 			{#if decryptedAttachment}
 				<div class="pb-2">
-					{#if decryptedAttachment?.endsWith(".mp4")}
+					{#if isVideoType()}
 						<video controls class="w-full mx-auto max-h-96">
 							<source src={decryptedAttachment}>
 							<track kind="captions">
 							Your browser does not support HTML video.
 						</video>
 					{:else}
-						<img src={decryptedAttachment} alt="Current post." class="w-max mx-auto max-h-96"/>
+						<img src={decryptedAttachment} alt="Media of this post." class="w-max mx-auto max-h-96"/>
 					{/if}
 				</div>
 			{/if}
