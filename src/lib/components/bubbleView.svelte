@@ -17,6 +17,7 @@
 	let dislikes:string[] = []
 	let decryptionKey = ''
 	let decryptedMessage:string|undefined = undefined
+	let decryptedAttachment:string|undefined = undefined
 
 	function like(set:boolean){
 		if(dislikes.includes($username)){
@@ -48,7 +49,7 @@
 
 	onMount(() => {
 		decryptedMessage = bubble.message
-		decryptMessage()
+		decryptBubble()
 		db.get('bubbles').get(bubble.id).get("stats").map().on((data:any) => {
 			if(data){
 				if (data.stat === "liked") {
@@ -89,18 +90,17 @@
 		body: 'Set your decryption key in the field below.',
 		value: decryptionKey,
 		buttonTextSubmit: 'Decrypt',
-		response: (r: string) => {if(r || r === '') decryptionKey = r; decryptMessage()},
+		response: (r: string) => {if(r || r === '') decryptionKey = r; decryptBubble()},
 	};
 
 	$: modal.value = decryptionKey
 
-	async function decryptMessage(){
-		try {
-			decryptedMessage = decryptionKey ? (await SEA.decrypt(bubble.message, decryptionKey)) : bubble.message
-		} catch (err) {
-			if (err instanceof Error) {
-				toastStore.trigger(errorToast(err.message))
-			}
+	async function decryptBubble(){
+		SEA.err = ""
+		decryptedMessage = decryptionKey ? (await SEA.decrypt(bubble.message, decryptionKey)) : bubble.message
+		decryptedAttachment = bubble?.attachment ? decryptionKey ? (await SEA.decrypt(bubble.attachment, decryptionKey)) : bubble.attachment : undefined
+		if(SEA.err){
+			toastStore.trigger(errorToast(SEA.err))		
 		}
 	}
 </script>
@@ -121,26 +121,28 @@
 				readonly
 				bind:value={decryptedMessage}
 				class="bg-transparent border-0 ring-0 w-full resize-none max-h-60"
-				rows={decryptedMessage.split('\n').length + 1}
+				rows={decryptedMessage.split('\n').length}
 			/>
-			{#if bubble?.attachment}
-				{#if bubble?.attachment.endsWith(".mp4")}
-					<video controls>
-						<source src={bubble?.attachment}>
-						<track kind="captions">
-						Your browser does not support HTML video.
-					</video>
-				{:else}
-					<img src={bubble?.attachment} alt="Current post."/>
-				{/if}
+			{#if decryptedAttachment}
+				<div class="pb-2">
+					{#if decryptedAttachment.endsWith(".mp4")}
+						<video controls class="w-full mx-auto max-h-96">
+							<source src={decryptedAttachment}>
+							<track kind="captions">
+							Your browser does not support HTML video.
+						</video>
+					{:else}
+						<img src={decryptedAttachment} alt="Current post." class="w-max mx-auto max-h-96"/>
+					{/if}
+				</div>
 			{/if}
 		{/if}
 		<div class="flex justify-between space-x-2">
 			<div class="flex space-x-2">
-				{#if decryptedMessage == undefined}
-					<span class="badge variant-filled-error p-1 h-min"><Icon icon="mdi:encryption-alert-outline" class="w-4 h-4" /></span>
+				{#if decryptionKey}
+					<span title="Decrypted" class="badge variant-filled-success p-1 h-min"><Icon icon="mdi:decrypted-check-outline" class="w-4 h-4" /></span>
 				{:else}
-					<span class="badge variant-filled-success p-1 h-min"><Icon icon="mdi:decrypted-check-outline" class="w-4 h-4" /></span>
+					<span title="No key" class="badge variant-filled-error p-1 h-min"><Icon icon="mdi:encryption-alert-outline" class="w-4 h-4" /></span>
 				{/if}
 				<button title="Decrypt" on:click={() => modalStore.trigger(modal)}>
 					<Icon icon="mdi:key" class="min-w-6 min-h-6"/>

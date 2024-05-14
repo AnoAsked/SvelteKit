@@ -80,7 +80,13 @@
 		rows={message.split('\n').length + 1}
 	/>
 	<div class="flex flex-col input-group-shim !p-0">
-		<button class="btn rounded-none variant-filled-surface h-full" title="Encrypt message" disabled={!message} on:click={() => modalStore.trigger(modal)}><Icon icon="mdi:key" class="w-6 h-6" /></button>
+		<button class="btn rounded-none {encryptionKey ? "variant-filled-success" : "variant-filled-surface"} h-full" title={encryptionKey ? "Edit encryption key" : "Set encryption key"} disabled={!message} on:click={() => modalStore.trigger(modal)}>
+			{#if encryptionKey}
+				<Icon icon="mdi:key-change" class="w-6 h-6" />
+			{:else}
+				<Icon icon="mdi:key-plus" class="w-6 h-6" />
+			{/if}
+		</button>
 		<button class="btn rounded-none variant-filled-surface h-full {message ? '!bg-primary-500' : ''}" title="Send message" disabled={!message} on:click|preventDefault={onSend}><Icon icon="mdi:send" class="w-6 h-6" /></button>
 	</div>
 </form>

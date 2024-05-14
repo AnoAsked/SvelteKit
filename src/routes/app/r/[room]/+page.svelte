@@ -39,8 +39,9 @@
                 })
             }
 
-            const secret = event.detail.encryptionKey ? await SEA.encrypt(event.detail.message, event.detail.encryptionKey) : event.detail.message
-            const bubble = user.get('all').set({message: secret, attachment: attachment, room: currentRoom.name})
+            const secret_message = event.detail.encryptionKey ? await SEA.encrypt(event.detail.message, event.detail.encryptionKey) : event.detail.message
+            const secret_attachment = event.detail.encryptionKey ? await SEA.encrypt(event?.detail?.attachment, event.detail.encryptionKey) : event?.detail?.attachment
+            const bubble = user.get('all').set({message: secret_message, attachment: secret_attachment, room: currentRoom.name})
 
             let id = ''
             let dublicate = true
