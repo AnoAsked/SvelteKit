@@ -126,12 +126,12 @@
 			{#if bubble?.attachment}
 				{#if bubble?.attachment.endsWith(".mp4")}
 					<video controls>
-						<source src="https://stream.mux.com/DS00Spx1CV902MCtPj5WknGlR102V5HFkDe/high.mp4" type="video/mp4">
+						<source src={bubble?.attachment}>
 						<track kind="captions">
 						Your browser does not support HTML video.
 					</video>
 				{:else}
-					<img src="https://i.imgur.com/dKwmURC.jpg" alt="Current post."/>
+					<img src={bubble?.attachment} alt="Current post."/>
 				{/if}
 			{/if}
 		{/if}

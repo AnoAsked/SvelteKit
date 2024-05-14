@@ -1,11 +1,12 @@
 <script lang="ts">
 	import Icon from "@iconify/svelte";
 	import { createEventDispatcher, onMount } from 'svelte';
-	import { getModalStore, type ModalSettings } from "@skeletonlabs/skeleton";
+	import { getModalStore, getToastStore, type ModalSettings } from "@skeletonlabs/skeleton";
+	import { errorToast } from "$lib/toast";
 
 	const dispatch = createEventDispatcher();
 	const modalStore = getModalStore();
-
+	const toastStore = getToastStore();
 
 	onMount(() => {
 		const inputElement = document.getElementById("hidden-upload");
@@ -22,12 +23,22 @@
 	let encryptionKey = ''
 
 	async function onSend() {
+		if(file){
+			if(file?.type.startsWith("video"))
+				if(file?.size > 200000000)
+					toastStore.trigger(errorToast("Video size can not exceed 200MB!"))
+			else
+				if(file?.size > 10000000)
+					toastStore.trigger(errorToast("Image size can not exceed 10MB!"))
+		}
+
 		dispatch('send', {
 			encryptionKey: encryptionKey,
 			message: message,
 			file: file,
 			key: key
 		});
+
 		message = ''
 		encryptionKey = ''
 		file = undefined

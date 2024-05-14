@@ -24,11 +24,15 @@
 
     async function onMessageSend(event:any){
         if(currentRoom){
+            let attachment = ""
             if(event?.detail?.file){
                 var formData = new FormData();
                 formData.append('image', event?.detail?.file);
-                iapi.post("", formData).then(res => {
-                    console.log(res)
+                await iapi.post("", formData).then(res => {
+                    if(res.status === 200)
+                        attachment = res.data.data.link
+                    else
+                        toastStore.trigger(errorToast(res.statusText))
                 }).catch(err => {
                     console.error(err)
                     toastStore.trigger(errorToast(err))
@@ -36,7 +40,7 @@
             }
 
             const secret = event.detail.encryptionKey ? await SEA.encrypt(event.detail.message, event.detail.encryptionKey) : event.detail.message
-            const bubble = user.get('all').set({message: secret, attachment: "", room: currentRoom.name})
+            const bubble = user.get('all').set({message: secret, attachment: attachment, room: currentRoom.name})
 
             let id = ''
             let dublicate = true
