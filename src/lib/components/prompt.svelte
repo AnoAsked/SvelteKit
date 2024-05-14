@@ -16,9 +16,8 @@
 
 
     let message = '';
-    let key = '';
 
-	let file:File|undefined
+	let file:File|undefined = undefined
 
 	let encryptionKey = ''
 
@@ -35,8 +34,7 @@
 		dispatch('send', {
 			encryptionKey: encryptionKey,
 			message: message,
-			file: file,
-			key: key
+			file: file
 		});
 
 		message = ''

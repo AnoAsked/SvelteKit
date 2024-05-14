@@ -40,7 +40,7 @@
             }
 
             const secret_message = event.detail.encryptionKey ? await SEA.encrypt(event.detail.message, event.detail.encryptionKey) : event.detail.message
-            const secret_attachment = attachment ? event.detail.encryptionKey ? await SEA.encrypt(event?.detail?.attachment, event.detail.encryptionKey) : event?.detail?.attachment : undefined
+            const secret_attachment = attachment ? event.detail.encryptionKey ? await SEA.encrypt(attachment, event.detail.encryptionKey) : attachment : ''
             const bubble = user.get('all').set({message: secret_message, attachment: secret_attachment, room: currentRoom.name})
 
             let id = ''

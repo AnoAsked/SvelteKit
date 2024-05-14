@@ -16,7 +16,7 @@
 
     async function onMessageSend(event:any){
         if(data.bubble){
-            const bubble = user.get('all').set({message: event.detail.message, attachment: event.detail?.attachment, room: parent.room})
+            const bubble = user.get('all').set({message: event.detail.message, attachment: event?.detail?.attachment, room: parent.room})
 
             let id = ''
             let dublicate = true

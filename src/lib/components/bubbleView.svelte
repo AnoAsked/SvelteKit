@@ -51,6 +51,7 @@
 
 	onMount(() => {
 		decryptedMessage = bubble.message
+		decryptedAttachment = bubble?.attachment
 		decryptBubble()
 		db.get('bubbles').get(bubble.id).get("stats").map().on((data:any) => {
 			if(data){
@@ -100,7 +101,7 @@
 	async function decryptBubble(){
 		SEA.err = ""
 		decryptedMessage = decryptionKey ? (await SEA.decrypt(bubble.message, decryptionKey)) : bubble.message
-		decryptedAttachment = bubble?.attachment ? decryptionKey ? (await SEA.decrypt(bubble.attachment, decryptionKey)) : bubble.attachment : undefined
+		decryptedAttachment = bubble?.attachment ? decryptionKey ? (await SEA.decrypt(bubble?.attachment, decryptionKey)) : bubble?.attachment : undefined
 		if(SEA.err){
 			toastStore.trigger(errorToast(SEA.err))		
 		}
@@ -127,7 +128,7 @@
 			/>
 			{#if decryptedAttachment}
 				<div class="pb-2">
-					{#if decryptedAttachment.endsWith(".mp4")}
+					{#if decryptedAttachment?.endsWith(".mp4")}
 						<video controls class="w-full mx-auto max-h-96">
 							<source src={decryptedAttachment}>
 							<track kind="captions">
