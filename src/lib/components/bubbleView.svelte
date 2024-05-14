@@ -15,6 +15,8 @@
 
 	let likes:string[] = []
 	let dislikes:string[] = []
+	let commentCount = 0
+
 	let decryptionKey = ''
 	let decryptedMessage:string|undefined = undefined
 	let decryptedAttachment:string|undefined = undefined
@@ -174,8 +176,9 @@
 					</button>
 				{/if}
 
-				<a href="/app/b/{bubble.id}" title="Comments">
+				<a href="/app/b/{bubble.id}" title="Comments" class="flex space-x-2 items-center">
 					<Icon icon="mdi:comment-text-multiple-outline" class="min-w-6 min-h-6"/>
+					<span>{commentCount}</span>
 				</a>
 			</div>
 		</div>

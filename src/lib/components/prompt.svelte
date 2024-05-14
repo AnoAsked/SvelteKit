@@ -56,7 +56,6 @@
 	function handleFiles() {
 		// @ts-ignore
 		file = this.files[0];
-		console.log(file)
 	}
 
 	$: if(!message) encryptionKey = ''
