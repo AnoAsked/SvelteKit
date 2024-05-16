@@ -103,7 +103,7 @@
 		SEA.err = ""
 		decryptedMessage = decryptionKey ? (await SEA.decrypt(bubble.message, decryptionKey)) : bubble.message
 		decryptedAttachment = bubble?.attachment ? decryptionKey ? (await SEA.decrypt(bubble?.attachment, decryptionKey)) : bubble?.attachment : undefined
-		if(SEA.err){
+		if(SEA.err && SEA.err != "Could not decrypt"){
 			toastStore.trigger(errorToast(SEA.err))		
 		}
 		attachmentOfTypeVideo = isVideoType()
@@ -114,6 +114,7 @@
 		if(!upper) return undefined 
 		if (
 			upper.endsWith(".MP4") ||
+			upper.endsWith(".MOV") ||
 			upper.endsWith(".MPEG") ||
 			upper.endsWith(".AVI") ||
 			upper.endsWith(".WEBM") ||
@@ -121,10 +122,12 @@
 			upper.endsWith(".X-MATROSKA") ||
 			upper.endsWith(".X-FLV") ||
 			upper.endsWith(".X-MSVIDEO") ||
-			upper.endsWith(".X-MS-WMV")
+			upper.endsWith(".X-MS-WMV") ||
+			upper.endsWith(".GIFV")
 		) return true
 		if(
 			upper.endsWith(".JPEG") ||
+			upper.endsWith(".JPG") ||
 			upper.endsWith(".PNG") ||
 			upper.endsWith(".GIF") ||
 			upper.endsWith(".APNG") ||

@@ -24,11 +24,15 @@
 	async function onSend() {
 		if(file){
 			if(file?.type.startsWith("video"))
-				if(file?.size > 200000000)
+				if(file?.size > 200000000){
 					toastStore.trigger(errorToast("Video size can not exceed 200MB!"))
+					return;
+				}
 			else
-				if(file?.size > 10000000)
+				if(file?.size > 10000000){
 					toastStore.trigger(errorToast("Image size can not exceed 10MB!"))
+					return;
+				}
 		}
 
 		dispatch('send', {
@@ -60,7 +64,7 @@
 	$: {modal.value = encryptionKey}
 </script>
 
-<input class="w-0" id="hidden-upload" type="file" hidden disabled={!message} accept="image/jpeg,image/jpg,image/gif,image/png,image/apng,image/tiff,video/mp4,video/webm,video/x-matroska,video/quicktime,video/x-flv,video/x-msvideo,video/x-ms-wmv,video/mpeg"/>
+<input class="w-0" id="hidden-upload" type="file" hidden disabled={!message} accept="image/jpeg,image/jpg,image/gif,image/png,image/apng,image/tiff,video/mp4,video/webm,video/x-matroska,video/quicktime,video/x-flv,video/x-msvideo,video/x-ms-wmv,video/mpeg,video/mov"/>
 <form class="input-group input-group-divider grid-cols-[auto_1fr_auto] rounded-container-token">
 	<div class="flex flex-col input-group-shim !p-0">
 		<button class="btn rounded-none variant-filled-surface h-full" title="Add tags" disabled={true}><Icon icon="mdi:tags" class="w-6 h-6" /></button>
