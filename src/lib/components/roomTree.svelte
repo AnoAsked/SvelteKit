@@ -6,11 +6,12 @@
 	import { goto } from "$app/navigation";
 	import { onMount } from "svelte";
 	import { user, username } from "$lib/auth";
+	import type { Tag } from "$lib/classes/tag";
 
 	const drawerStore = getDrawerStore();
 
 	export let favouriteRooms:Room[] = [];
-	export let personalTags:String[] = [];
+	export let personalTags:Tag[] = [];
 
 	function selectRoom(route:string) {
 		goto(route)
@@ -25,6 +26,12 @@
 			});
 			favouriteRooms = favouriteRooms
         })
+
+		personalTags = []
+		user?.get('tags').on((res:string) => {
+			if(res)
+				personalTags = JSON.parse(res)
+		})
 	})
 </script>
 
@@ -50,7 +57,7 @@
 		<svelte:fragment slot="children">
 			{#each personalTags as tag}
 				<TreeViewItem on:click={() => selectRoom("/app/t/"+tag)}>
-					<p>{tag}</p>
+					<span class="chip variant-outline-primary">{tag}</span>
 				</TreeViewItem>
 			{/each}
 		</svelte:fragment>
