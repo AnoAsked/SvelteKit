@@ -2,7 +2,7 @@
 	import { Bubble } from "$lib/classes/bubble";
     import BubbleView from "$lib/components/bubbleView.svelte";
     import DateSeperator from "$lib/components/dateSeperator.svelte";
-    import { afterUpdate } from 'svelte';
+    import { afterUpdate, tick } from 'svelte';
 
     export let bubbles:Bubble[] = []
 
@@ -13,6 +13,7 @@
     });
 
     export const scrollToBottom = async (node:any) => {
+        await tick();
         node.scroll({ top: node.scrollHeight, behavior: 'smooth' });
     }; 
 
