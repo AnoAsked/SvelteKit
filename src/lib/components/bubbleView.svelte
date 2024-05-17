@@ -86,6 +86,14 @@
 				dislikes = dislikes
 			}
 		})
+
+		bubble.tags = []
+
+		db.get('bubbles').get(bubble.id).get("tags").map().once((tag:string) => {
+			if (tag){
+				bubble.tags?.push(tag)
+			}
+		})
 	})
 
 	const modal: ModalSettings = {
@@ -147,7 +155,7 @@
 			<small class="opacity-50">{bubble.timestamp.toLocaleTimeString()}</small>
 		</header>
 		{#if bubble?.tags}
-			<div class="w-full">
+			<div class="w-full flex space-x-2">
 				{#each bubble?.tags ?? [] as tag}
 					<span class="chip variant-outline-primary">{tag}</span>
 				{/each}

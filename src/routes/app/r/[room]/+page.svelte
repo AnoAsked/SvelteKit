@@ -43,7 +43,7 @@
 
             const secret_message = event.detail.encryptionKey ? await SEA.encrypt(event.detail.message, event.detail.encryptionKey) : event.detail.message
             const secret_attachment = attachment ? event.detail.encryptionKey ? await SEA.encrypt(attachment, event.detail.encryptionKey) : attachment : ''
-            const bubble = user.get('all').set({message: secret_message, attachment: secret_attachment, room: currentRoom.name, tags: event?.detail?.tags})
+            const bubble = user.get('all').set({message: secret_message, attachment: secret_attachment, room: currentRoom.name})
 
             let id = ''
             let dublicate = true
@@ -61,6 +61,7 @@
 
             // add bubble to tags
             event?.detail?.tags.forEach((tag:string) => {
+                db.get('bubbles').get(id).get("tags").set(tag)
                 db.get('tags').get(tag).set({id: id})
             });
 
@@ -86,8 +87,7 @@
                                 await db.user(bubble).get('alias') ?? await db.user(bubble).get('alias'), 
                                 new Date((GUN.state as any).is(bubble, 'message')),
                                 bubble?.message,
-                                bubble?.attachment,
-                                bubble?.tags,
+                                bubble?.attachment
                             )
 
                             if (add.message && !currentBubbles.some( ({timestamp}) => timestamp.valueOf() == add.timestamp.valueOf())) {
