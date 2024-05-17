@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount, type SvelteComponent } from 'svelte';
-	import { Avatar, getModalStore, getToastStore } from '@skeletonlabs/skeleton';
+	import { Avatar, InputChip, getModalStore, getToastStore } from '@skeletonlabs/skeleton';
 	import Icon from '@iconify/svelte';
 	import { db, email, user, username } from '$lib/auth';
 	import vapi from "$lib/vapi";
@@ -8,6 +8,7 @@
 	import StatusBadge from '$lib/components/statusBadge.svelte';
 	import { errorToast, successToast } from '$lib/toast';
 	import StatusForm from '$lib/components/statusForm.svelte';
+	import type { Tag } from '$lib/classes/tag';
 
 	export let parent: SvelteComponent;
 
@@ -17,6 +18,7 @@
 	let status:Status = Status.LOADING;
 
 	let formEmail:string = $email
+	let tags:Tag[] = []
 
 	function onFormSubmit(): void {
 		$email = formEmail
@@ -25,10 +27,17 @@
 		}).catch(() => {
 			toastStore.trigger(errorToast("Failed to save email."))
 		})
+		user.get('tags').put(JSON.stringify(tags))
 	}
 
 	onMount(() => {
 		checkStatus()
+
+		tags = []
+		user.get('tags').once((res:string) => {
+			if(res)
+				tags = JSON.parse(res)
+		})
 	});
 
 	function checkStatus(){
@@ -59,6 +68,10 @@
 			<Avatar src="https://api.dicebear.com/8.x/pixel-art/svg?seed={$username}" width="w-full h-full max-w-32" rounded="rounded-full"/>
 		</div>
 		<article>This data is encrypted and distributed amongst multiple peers.</article>
+		<form class="modal-form border border-surface-500 p-4 space-y-2 rounded-container-token">
+			<span>Tags can be used to mark bubbles, with for example locations or keywords.</span>
+			<InputChip bind:value={tags} name="tags" placeholder="Enter a tag (mark/location)..." chips="variant-outline-primary" regionInput="focus:outline-0"/>
+		</form>
 		<form class="modal-form border border-surface-500 p-4 space-y-2 rounded-container-token">
 			<label class="label">
 				<span>Email</span>
