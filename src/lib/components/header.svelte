@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { AppBar, Avatar, getDrawerStore, LightSwitch, popup, type PopupSettings } from "@skeletonlabs/skeleton";
-    import { username, logout, db, user } from "$lib/auth";
+    import { username, logout } from "$lib/auth";
     import { getToastStore } from '@skeletonlabs/skeleton';
 	import Icon from "@iconify/svelte";
 	import { goto } from "$app/navigation";
@@ -10,15 +10,13 @@
     const modalStore = getModalStore();
     const toastStore = getToastStore();
 
-    let connected:boolean|undefined = undefined;
-
     function onLogout(){
         toastStore.trigger(successToast("Logging out of AnoAsked."))
         logout()
         .then(() => {
             goto("/auth")
         })
-        .catch(err => toastStore.trigger(errorToast(err)))
+        .catch(() => toastStore.trigger(errorToast("Failed to logout.")))
     }
 
     function onSettings(){
@@ -36,7 +34,7 @@
             localStorage.clear()
             goto("/auth")
         })
-        .catch(err => toastStore.trigger(errorToast(err)))
+        .catch(() => toastStore.trigger(errorToast("Failed to logout.")))
     }
 
     const userPopup: PopupSettings = {

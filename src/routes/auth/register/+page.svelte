@@ -28,8 +28,8 @@
             toastStore.trigger(successToast("Registered and logged into AnoAsked."))
             goto("/app/r/Home", {replaceState: true})
         })
-        .catch(err => {
-            toastStore.trigger(errorToast(err))
+        .catch(() => {
+            toastStore.trigger(errorToast("An error occurred while trying to register."))
             goto("/auth")
         })
         .finally(() => loading = false)

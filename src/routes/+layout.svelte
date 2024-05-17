@@ -27,9 +27,11 @@
 
 	// Modals
 	import SettingsModal from '$lib/components/settings.svelte';
+	import TagsModal from '$lib/components/tags.svelte';
 
 	const modalRegistry: Record<string, ModalComponent> = {
-		settingsModal: { ref: SettingsModal }
+		settingsModal: { ref: SettingsModal },
+		tagsModal: { ref: TagsModal }
 	};
 
 	// Routing

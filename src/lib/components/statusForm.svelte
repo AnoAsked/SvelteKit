@@ -26,9 +26,8 @@
 				toastStore.trigger(successToast(res.data.message))
 				status = res.data.status
 			}
-		}).catch(err => {
-			console.error(err)
-			toastStore.trigger(errorToast(err))
+		}).catch(() => {
+			toastStore.trigger(errorToast("An error occurred while verifying user."))
 		}).finally(() => {
 			loading = false
 			checkStatus()
@@ -46,9 +45,8 @@
 				toastStore.trigger(successToast(res.data.message))
 				status = res.data.status
 			}
-		}).catch(err => {
-			console.error(err)
-			toastStore.trigger(errorToast(err))
+		}).catch(() => {
+			toastStore.trigger(errorToast("An error occurred while resending user email."))
 		}).finally(() => {
 			checkStatus()
 		})
@@ -68,9 +66,8 @@
 				toastStore.trigger(successToast(res.data.message))
 				status = res.data.status
 			}
-		}).catch(err => {
-			console.error(err)
-			toastStore.trigger(errorToast(err))
+		}).catch(() => {
+			toastStore.trigger(errorToast("An error occurred while confirming user email."))
 		}).finally(() => {
 			loading = false
 			checkStatus()

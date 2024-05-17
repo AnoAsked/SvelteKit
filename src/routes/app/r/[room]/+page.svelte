@@ -17,11 +17,13 @@
 
     export let data:PageData
 
+    let loading = false;
 
     let currentRoom:Room;
     let currentBubbles:Bubble[] = [];
 
     async function onMessageSend(event:any){
+        loading = true
         if(currentRoom){
             let attachment = ""
             if(event?.detail?.file){
@@ -32,15 +34,16 @@
                         attachment = res.data.data.link
                     else
                         toastStore.trigger(errorToast(res.statusText))
-                }).catch(err => {
-                    console.error(err)
-                    toastStore.trigger(errorToast(err))
+                }).catch(() => {
+                    toastStore.trigger(errorToast("An error occurred while sending message."))
+                    loading = false
+                    return;
                 })
             }
 
             const secret_message = event.detail.encryptionKey ? await SEA.encrypt(event.detail.message, event.detail.encryptionKey) : event.detail.message
             const secret_attachment = attachment ? event.detail.encryptionKey ? await SEA.encrypt(attachment, event.detail.encryptionKey) : attachment : ''
-            const bubble = user.get('all').set({message: secret_message, attachment: secret_attachment, room: currentRoom.name})
+            const bubble = user.get('all').set({message: secret_message, attachment: secret_attachment, room: currentRoom.name, tags: event?.detail?.tags})
 
             let id = ''
             let dublicate = true
@@ -56,8 +59,14 @@
             // add hash to r/room
             db.get('rooms').get(currentRoom.name).set({id: id})
 
+            // add bubble to tags
+            event?.detail?.tags.forEach((tag:string) => {
+                db.get('tags').get(tag).set({id: id})
+            });
+
             currentBubbles=currentBubbles
         }
+        loading = false
     }
 
     function roomChanged(){
@@ -77,7 +86,8 @@
                                 await db.user(bubble).get('alias') ?? await db.user(bubble).get('alias'), 
                                 new Date((GUN.state as any).is(bubble, 'message')),
                                 bubble?.message,
-                                bubble?.attachment
+                                bubble?.attachment,
+                                bubble?.tags,
                             )
 
                             if (add.message && !currentBubbles.some( ({timestamp}) => timestamp.valueOf() == add.timestamp.valueOf())) {
@@ -95,4 +105,4 @@
 <RoomHeader bind:room={currentRoom}/>
 <hr class="!border-t-2" />
 <RoomView bind:bubbles={currentBubbles}/>
-<Prompt on:send={onMessageSend}/>
+<Prompt on:send={onMessageSend} bind:loading={loading}/>

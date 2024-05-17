@@ -19,7 +19,7 @@
             toastStore.trigger(successToast("Logged into AnoAsked."))
             goto("/app/r/Home", {replaceState: true})
         })
-        .catch(err => toastStore.trigger(errorToast(err)))
+        .catch(() => toastStore.trigger(errorToast("An error occurred while trying to login.")))
         .finally(() => loading = false)
     }
 </script>

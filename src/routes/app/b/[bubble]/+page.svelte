@@ -16,11 +16,14 @@
 
     export let data:PageData
 
+    let loading = false;
+
     let currentComments:Bubble[] = [];
 
     let parent:Bubble
 
     async function onMessageSend(event:any){
+        loading = true
         if(data.bubble){
             let attachment = ""
             if(event?.detail?.file){
@@ -31,15 +34,16 @@
                         attachment = res.data.data.link
                     else
                         toastStore.trigger(errorToast(res.statusText))
-                }).catch(err => {
-                    console.error(err)
-                    toastStore.trigger(errorToast(err))
+                }).catch(() => {
+                    toastStore.trigger(errorToast("An error occurred while sending message."))
+                    loading = false
+                    return;
                 })
             }
 
             const secret_message = event.detail.encryptionKey ? await SEA.encrypt(event.detail.message, event.detail.encryptionKey) : event.detail.message
             const secret_attachment = attachment ? event.detail.encryptionKey ? await SEA.encrypt(attachment, event.detail.encryptionKey) : attachment : ''
-            const bubble = user.get('all').set({message: secret_message, attachment: secret_attachment, room: parent.room})
+            const bubble = user.get('all').set({message: secret_message, attachment: secret_attachment, room: parent.room, tags: event?.detail?.tags})
 
             let id = ''
             let dublicate = true
@@ -53,8 +57,14 @@
             db.get('bubbles').get(id).get("data").put(bubble)
             db.get('bubbles').get(data.bubble).get("comments").set({id: id})
 
+            // add bubble to tags
+            event?.detail?.tags.forEach((tag:string) => {
+                db.get('tags').get(tag).set({id: id})
+            });
+
             currentComments=currentComments
         }
+        loading = false
     }
 
     async function bubbleChanged(){
@@ -66,7 +76,8 @@
                     await db.user(parentBubble).get('alias'), 
                     new Date((GUN.state as any).is(parentBubble, 'message')),
                     parentBubble?.message,
-                    parentBubble?.attachment
+                    parentBubble?.attachment,
+                    parentBubble?.tags
                 )
             }
         })
@@ -86,7 +97,8 @@
                                 await db.user(bubble).get('alias'), 
                                 new Date((GUN.state as any).is(bubble, 'message')),
                                 bubble?.message,
-                                bubble?.attachment
+                                bubble?.attachment,
+                                bubble?.tags
                             )
 
                             if (add.message && !currentComments.some( ({timestamp}) => timestamp.valueOf() == add.timestamp.valueOf())) {
@@ -104,4 +116,4 @@
 <CommentHeader bind:bubble={parent}/>
 <hr class="!border-t-2" />
 <RoomView bind:bubbles={currentComments}/>
-<Prompt on:send={onMessageSend}/>
+<Prompt on:send={onMessageSend} bind:loading={loading}/>

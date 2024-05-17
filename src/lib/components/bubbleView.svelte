@@ -2,7 +2,7 @@
 	import { db, username } from "$lib/auth";
 	import type { Bubble } from "$lib/classes/bubble";
 	import Icon from "@iconify/svelte";
-	import { Avatar, getModalStore, getToastStore, type ModalSettings } from "@skeletonlabs/skeleton";
+	import { Avatar, InputChip, getModalStore, getToastStore, type ModalSettings } from "@skeletonlabs/skeleton";
 	import { onMount } from "svelte";
 	import 'gun/lib/unset.js';
 	import SEA from "gun/sea";
@@ -146,6 +146,13 @@
 			<p class="font-bold">{bubble.user}</p>
 			<small class="opacity-50">{bubble.timestamp.toLocaleTimeString()}</small>
 		</header>
+		{#if bubble?.tags}
+			<div class="w-full">
+				{#each bubble?.tags ?? [] as tag}
+					<span class="chip variant-outline-primary">{tag}</span>
+				{/each}
+			</div>
+		{/if}
 		{#if decryptedMessage == undefined}
 			<span class="badge variant-filled-error p-1 h-min"><p>Could not decrypt message</p><Icon icon="mdi:encryption-alert-outline" class="w-4 h-4" /></span>
 		{:else}

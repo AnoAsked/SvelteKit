@@ -23,8 +23,8 @@
 			toastStore.trigger(warningToast("Copied user link to clipboard. (unsafe)"))
 			goto("/app/r/Home", {replaceState: true})
 		})
-		.catch(err => {
-			toastStore.trigger(errorToast(err))
+		.catch(() => {
+			toastStore.trigger(errorToast("An error occurred while trying to register."))
 		})
 		.finally(() => loading = false)
 	}
