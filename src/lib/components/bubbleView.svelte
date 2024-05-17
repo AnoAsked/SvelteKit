@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { db, username } from "$lib/auth";
+	import { db, user, username } from "$lib/auth";
 	import type { Bubble } from "$lib/classes/bubble";
 	import Icon from "@iconify/svelte";
 	import { Avatar, InputChip, getModalStore, getToastStore, type ModalSettings } from "@skeletonlabs/skeleton";
@@ -7,6 +7,7 @@
 	import 'gun/lib/unset.js';
 	import SEA from "gun/sea";
 	import { errorToast } from "$lib/toast";
+	import type { Tag } from "$lib/classes/tag";
 
 	const modalStore = getModalStore();
 	const toastStore = getToastStore();
@@ -15,6 +16,8 @@
 
 	let likes:string[] = []
 	let dislikes:string[] = []
+
+	let personalTags:Tag[] = []
 
 	let attachmentOfTypeVideo:boolean|undefined = undefined
 
@@ -89,10 +92,17 @@
 
 		bubble.tags = []
 
-		db.get('bubbles').get(bubble.id).get("tags").map().once((tag:string) => {
+		db.get('bubbles').get(bubble.id).get("tags").map().on((tag:string) => {
 			if (tag){
 				bubble.tags?.push(tag)
+				bubble.tags = bubble.tags
 			}
+		})
+
+		personalTags = []
+		user?.get('tags').on((res:string) => {
+			if(res)
+				personalTags = JSON.parse(res)
 		})
 	})
 
@@ -157,7 +167,7 @@
 		{#if bubble?.tags}
 			<div class="w-full flex space-x-2">
 				{#each bubble?.tags ?? [] as tag}
-					<span class="chip variant-outline-primary">{tag}</span>
+				<a class="chip {personalTags.some(t => t.name === tag) ? "variant-filled-primary" : "variant-outline-primary"}" href="/app/t/{tag}">{tag}</a>
 				{/each}
 			</div>
 		{/if}

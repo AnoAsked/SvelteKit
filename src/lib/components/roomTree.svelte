@@ -56,8 +56,8 @@
 		Posts with your tags
 		<svelte:fragment slot="children">
 			{#each personalTags as tag}
-				<TreeViewItem on:click={() => selectRoom("/app/t/"+tag)}>
-					<span class="chip variant-outline-primary">{tag}</span>
+				<TreeViewItem on:click={() => selectRoom("/app/t/"+tag.name)}>
+					<span class="chip variant-outline-primary">{tag.name}</span>
 				</TreeViewItem>
 			{/each}
 		</svelte:fragment>

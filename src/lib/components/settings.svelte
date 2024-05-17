@@ -8,7 +8,7 @@
 	import StatusBadge from '$lib/components/statusBadge.svelte';
 	import { errorToast, successToast } from '$lib/toast';
 	import StatusForm from '$lib/components/statusForm.svelte';
-	import type { Tag } from '$lib/classes/tag';
+	import { Tag } from '$lib/classes/tag';
 
 	export let parent: SvelteComponent;
 
@@ -18,7 +18,8 @@
 	let status:Status = Status.LOADING;
 
 	let formEmail:string = $email
-	let tags:Tag[] = []
+	let personalTags:Tag[] = []
+	let tags:string[] = []
 
 	function onFormSubmit(): void {
 		$email = formEmail
@@ -27,16 +28,35 @@
 		}).catch(() => {
 			toastStore.trigger(errorToast("Failed to save email."))
 		})
-		user.get('tags').put(JSON.stringify(tags))
+
+		personalTags.forEach(val => {
+			if(!tags.includes(val.name)){
+				const index = personalTags.findIndex(t => t.name === val.name);
+				if (index > -1) {
+					personalTags.splice(index, 1);
+				}
+			}
+		})
+
+		tags.forEach(val => {
+			if(!personalTags.some(t => t.name === val)){
+				personalTags.push(new Tag(val, ""))
+			}
+		})
+
+		user.get('tags').put(JSON.stringify(personalTags))
 	}
 
 	onMount(() => {
 		checkStatus()
 
+		personalTags = []
 		tags = []
-		user.get('tags').once((res:string) => {
-			if(res)
-				tags = JSON.parse(res)
+		user.get('tags').on((res:string) => {
+			if(res){
+				personalTags = JSON.parse(res)
+				tags = personalTags.map(t => t.name)
+			}
 		})
 	});
 
