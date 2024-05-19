@@ -27,7 +27,7 @@
             {#if bubble.timestamp.toLocaleDateString() !== bubbles[index-1]?.timestamp.toLocaleDateString()}
                 <DateSeperator date={bubble?.timestamp}/>
             {/if}
-        <TagBubbleView bubble={bubble} pageTag={tag}/>
+        <TagBubbleView bubble={bubble}/>
         {/each}
     </div>
 </div>

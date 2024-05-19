@@ -12,7 +12,6 @@
 	const toastStore = getToastStore();
 
     export let bubble:Bubble;
-    export let pageTag:string;
 
     let personalTags:Tag[];
 
