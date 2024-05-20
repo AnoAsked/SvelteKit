@@ -46,7 +46,7 @@
 				goto("/auth")
 		} else if ($username && browser){
 			if (!$page.url.pathname.startsWith("/app") || $page.url.pathname === "/app")
-				goto("/app/r/Home")
+				goto("/app/r/home")
 		}
 	}
 </script>

@@ -2,17 +2,22 @@
 	import { db, user, username } from "$lib/auth";
 	import type { Bubble } from "$lib/classes/bubble";
 	import Icon from "@iconify/svelte";
-	import { Avatar, InputChip, getModalStore, getToastStore, type ModalSettings } from "@skeletonlabs/skeleton";
+	import { Avatar, getModalStore, getToastStore, type ModalSettings } from "@skeletonlabs/skeleton";
 	import { onMount } from "svelte";
 	import 'gun/lib/unset.js';
 	import SEA from "gun/sea";
 	import { errorToast } from "$lib/toast";
 	import type { Tag } from "$lib/classes/tag";
+	import StatusBadge from '$lib/components/statusBadge.svelte';
+	import vapi from "$lib/vapi";
+	import { Status } from "$lib/enums/status";
 
 	const modalStore = getModalStore();
 	const toastStore = getToastStore();
 
     export let bubble:Bubble;
+
+	let status:Status = Status.LOADING;
 
 	let likes:string[] = []
 	let dislikes:string[] = []
@@ -104,6 +109,8 @@
 			if(res)
 				personalTags = JSON.parse(res)
 		})
+
+		checkStatus()
 	})
 
 	const modal: ModalSettings = {
@@ -153,11 +160,26 @@
 		) return false
 		return undefined
 	}
+
+	function checkStatus(){
+		vapi.post("check", {
+			username: bubble.user
+		}).then(res => {
+			if (res.data.status == "FAILED")
+				toastStore.trigger(errorToast(res.data.message))
+			status = res.data.status
+		}).catch(() => {
+			toastStore.trigger(errorToast("An error occurred while checking for user status."))
+		})
+	}
 </script>
 
 <div class="grid {bubble.user === $username ? 'grid-cols-[1fr_auto]' : 'grid-cols-[auto_1fr]'} gap-2">
 	{#if bubble.user !== $username}
-		<Avatar src="https://api.dicebear.com/8.x/pixel-art/svg?seed={bubble.user}" width="w-8" />
+	<div class="flex flex-col space-y-2 items-center">
+		<Avatar src="https://api.dicebear.com/8.x/pixel-art/svg?seed={bubble.user}" width="w-8 h-8"/>
+		<StatusBadge status={status} text={false}/>
+	</div>
 	{/if}
 	<div class="card p-4 {bubble.user === $username ? 'variant-soft-secondary rounded-tr-none' : 'variant-soft rounded-tl-none'} space-y-2">
 		<header class="flex justify-between items-center">

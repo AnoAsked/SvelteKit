@@ -26,7 +26,7 @@
         register(username, password, email)
         .then(() => {
             toastStore.trigger(successToast("Registered and logged into AnoAsked."))
-            goto("/app/r/Home", {replaceState: true})
+            goto("/app/r/home", {replaceState: true})
         })
         .catch(() => {
             toastStore.trigger(errorToast("An error occurred while trying to register."))

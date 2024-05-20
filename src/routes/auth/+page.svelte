@@ -21,7 +21,7 @@
 			toastStore.trigger(successToast("Created user for anonymous use."))
 			navigator.clipboard.writeText(`http://${window.location.host}/auth/link/${username}/${password}`)
 			toastStore.trigger(warningToast("Copied user link to clipboard. (unsafe)"))
-			goto("/app/r/Home", {replaceState: true})
+			goto("/app/r/home", {replaceState: true})
 		})
 		.catch(() => {
 			toastStore.trigger(errorToast("An error occurred while trying to register."))
