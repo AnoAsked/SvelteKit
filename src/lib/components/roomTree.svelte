@@ -27,10 +27,11 @@
 			favouriteRooms = favouriteRooms
         })
 
-		personalTags = []
 		user?.get('tags').on((res:string) => {
-			if(res)
+			if(res){
+				personalTags = []
 				personalTags = JSON.parse(res)
+			}
 		})
 	})
 </script>

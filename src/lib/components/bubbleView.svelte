@@ -99,15 +99,17 @@
 
 		db.get('bubbles').get(bubble.id).get("tags").map().on((tag:string) => {
 			if (tag){
-				bubble.tags?.push(tag)
+				if(!bubble.tags?.includes(tag))
+					bubble.tags?.push(tag)
 				bubble.tags = bubble.tags
 			}
 		})
 
-		personalTags = []
 		user?.get('tags').on((res:string) => {
-			if(res)
+			if(res){
+				personalTags = []
 				personalTags = JSON.parse(res)
+			}
 		})
 
 		checkStatus()
