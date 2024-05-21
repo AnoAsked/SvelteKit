@@ -100,7 +100,7 @@
                                 bubble?.attachment
                             )
 
-                            if (add.message && !currentComments.some( ({timestamp}) => timestamp.valueOf() == add.timestamp.valueOf())) {
+                            if (add.message && !currentComments?.some( ({timestamp}) => timestamp.valueOf() == add.timestamp.valueOf())) {
                                 currentComments = [...currentComments, add].sort((a, b) => a.timestamp.valueOf() - b.timestamp.valueOf());
                             }
                         }

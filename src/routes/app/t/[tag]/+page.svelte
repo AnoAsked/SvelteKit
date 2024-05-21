@@ -32,7 +32,7 @@
                                 bubble?.attachment
                             )
 
-                            if (add.message && !currentBubbles.some( ({timestamp}) => timestamp.valueOf() == add.timestamp.valueOf())) {
+                            if (add.message && !currentBubbles?.some( ({timestamp}) => timestamp.valueOf() == add.timestamp.valueOf())) {
                                 currentBubbles = [...currentBubbles, add].sort((a, b) => a.timestamp.valueOf() - b.timestamp.valueOf());
                             }
                         }

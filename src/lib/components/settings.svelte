@@ -39,7 +39,7 @@
 		})
 
 		tags.forEach(val => {
-			if(!personalTags.some(t => t.name === val)){
+			if(!personalTags?.some(t => t.name === val)){
 				personalTags.push(new Tag(val, ""))
 			}
 		})

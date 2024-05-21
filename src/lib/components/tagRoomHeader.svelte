@@ -44,7 +44,7 @@
     </div>
     <h3 class="h-full h3 text-ellipsis overflow-hidden">{tag}</h3>
     <div class="flex justify-end w-20">
-        {#if personalTags.some(t => t.name === tag)}
+        {#if personalTags?.some(t => t.name === tag)}
             <button on:click={onRemove} title="Remove tag" class="w-min">
                 <Icon icon="mdi:tag-minus" class="min-w-8 min-h-8 text-primary-500"/>
             </button>

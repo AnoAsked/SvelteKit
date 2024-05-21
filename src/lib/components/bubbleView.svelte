@@ -191,7 +191,7 @@
 		{#if bubble?.tags}
 			<div class="w-full flex space-x-2">
 				{#each bubble?.tags ?? [] as tag}
-				<a class="chip {personalTags.some(t => t.name === tag) ? "variant-filled-primary" : "variant-outline-primary"}" href="/app/t/{tag}">{tag}</a>
+				<a class="chip {personalTags?.some(t => t.name === tag) ? "variant-filled-primary" : "variant-outline-primary"}" href="/app/t/{tag}">{tag}</a>
 				{/each}
 			</div>
 		{/if}
